@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+temp
+.DS_Store
+/packages/google-closure-compiler-java/compiler.jar
+/packages/google-closure-compiler-linux/compiler.jar
+/packages/google-closure-compiler-linux/compiler
+/packages/google-closure-compiler-osx/compiler.jar
+/packages/google-closure-compiler-osx/compiler

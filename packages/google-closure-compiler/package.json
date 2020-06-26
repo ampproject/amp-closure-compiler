@@ -1,0 +1,59 @@
+{
+  "name": "@kristoferbaxter/google-closure-compiler",
+  "version": "20200614.0.0",
+  "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
+  "repository": "https://github.com/google/closure-compiler-npm/tree/master/packages/google-closure-compiler",
+  "keywords": [
+    "javascript",
+    "compiler",
+    "optimizer",
+    "minifier",
+    "closure",
+    "gulpplugin",
+    "gruntplugin"
+  ],
+  "bin": {
+    "google-closure-compiler": "cli.js"
+  },
+  "main": "index.js",
+  "files": [
+    "lib/",
+    "cli.js",
+    "index.js",
+    "package.json",
+    "contrib/",
+    "README.md"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "chalk": "2.x",
+    "@kristoferbaxter/google-closure-compiler-java": "^20200614.0.0",
+    "minimist": "1.x",
+    "vinyl": "2.x",
+    "vinyl-sourcemaps-apply": "^0.2.0"
+  },
+  "optionalDependencies": {
+    "@kristoferbaxter/google-closure-compiler-linux": "^20200614.0.0",
+    "@kristoferbaxter/google-closure-compiler-osx": "^20200614.0.0"
+  },
+  "devDependencies": {
+    "gulp": "4.x",
+    "gulp-filter": "6.x",
+    "gulp-mocha": "6.x",
+    "gulp-sourcemaps": "2.x",
+    "lerna": "^3.4.1",
+    "lodash": "^4.17.10",
+    "mocha": "6.x",
+    "ncp": "^2.0.0",
+    "semver": "^5.1.0",
+    "should": "^13.2.3",
+    "stream-assert": "^2.0.3"
+  },
+  "scripts": {
+    "build": "echo \"google-closure-compiler build\"",
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">=8"
+  }
+}

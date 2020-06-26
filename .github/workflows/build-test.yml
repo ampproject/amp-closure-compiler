@@ -1,0 +1,37 @@
+name: Build Binaries
+
+on: [pull_request]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest]
+        node-version: [12.x]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: true
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '8.11.0.1' # The JDK version to make available on the path.
+        architecture: x64 # (x64 or x86) - defaults to x64
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install Dependencies
+      run: yarn install
+    - name: Upgrade Packages to Specified Closure Version
+      run: node ./tasks/bump-version.js
+    - name: Compile Native Binary
+      run: yarn build
+    - name: Test Changes
+      run: yarn test
+    - name: Push Changes
+      uses: kristoferbaxter/github-push-action@master
+      with:
+        force: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.head_ref }}

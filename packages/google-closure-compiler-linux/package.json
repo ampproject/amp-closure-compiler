@@ -1,0 +1,32 @@
+{
+  "name": "@kristoferbaxter/google-closure-compiler-linux",
+  "version": "20200614.0.0",
+  "description": "Check, compile, optimize and compress Javascript with Closure-Compiler using Java",
+  "main": "index.js",
+  "repository": "https://github.com/google/closure-compiler-npm/tree/master/packages/google-closure-compiler-linux",
+  "homepage": "https://developers.google.com/closure/compiler/",
+  "license": "Apache-2.0",
+  "keywords": [
+    "javascript",
+    "compiler",
+    "optimizer",
+    "minifier",
+    "closure",
+    "java"
+  ],
+  "files": [
+    "compiler",
+    "index.js",
+    "package.json",
+    "readme.md"
+  ],
+  "cpu": [
+    "x64",
+    "x86"
+  ],
+  "scripts": {
+    "build": "./build-image.js",
+    "test": "./test.js",
+    "restrict": "./add-os-restrictions.js"
+  }
+}
