@@ -17,7 +17,6 @@
 "use strict";
 
 // Note: We download graal since it's 800MB+ of disk space per platform.
-
 const fs = require("fs");
 const path = require("path");
 const runCommand = require("./run-command.js");
