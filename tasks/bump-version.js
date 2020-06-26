@@ -38,7 +38,7 @@ process.on("unhandledRejection", (error) => {
 (async function () {
   // 1. Retrieve Closure Version from NPM version published.
   const closureVersion = `${semverMajor(
-    pkg.devDependencies["google-closure-compiler"]
+    pkg.devDependencies["google-closure-compiler-java"]
   )}.0.0`;
 
   // 2. Update Major version within each package.
