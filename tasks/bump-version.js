@@ -44,7 +44,7 @@ process.on("unhandledRejection", (error) => {
   // 2. Update Major version within each package.
   for await (const packageFolderName of PACKAGE_FOLDER_NAMES) {
     const packageLocation = `./packages/${packageFolderName}/package.json`;
-    const packageContents = await fs.readFile(packageLocation, "utf8");
+    const packageContents = await fs.promises.readFile(packageLocation, "utf8");
     const parsed = JSON.parse(packageContents);
     if (semverLt(parsed.version, closureVersion)) {
       // Only update the version if its older than the current released `closure-compiler`.
