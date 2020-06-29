@@ -51,7 +51,8 @@
   },
   "scripts": {
     "build": "echo \"google-closure-compiler build\"",
-    "test": "mocha"
+    "test": "mocha",
+    "restrict": "echo \"google-closure-compiler restrict\""
   },
   "engines": {
     "node": ">=8"

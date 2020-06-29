@@ -25,6 +25,7 @@
   },
   "scripts": {
     "build": "echo \"google-closure-compiler-java build\"",
-    "test": "./test.js"
+    "test": "./test.js",
+    "restrict": "echo \"google-closure-compiler-java restrict\""
   }
 }

@@ -22,6 +22,7 @@
   "scripts": {
     "build": "./tasks/build.sh",
     "test": "./tasks/test.sh",
+    "restrict": "./tasks/restrict.sh",
     "clean": "./tasks/clean.sh"
   }
 }
