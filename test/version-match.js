@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Copyright 2018 The Closure Compiler Authors.
  *
@@ -14,15 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-const fs = require('fs');
-const javaPath = require('./');
-const kleur = require('kleur');
-
-process.stdout.write('google-closure-compiler-java\n');
-if (fs.existsSync(javaPath)) {
-  process.stdout.write(`  ${kleur.green('✓')} ${kleur.dim('compiler jar exists')}\n`);
-} else {
-  process.stdout.write(`  ${kleur.red('compiler jar does not exist')}\n`);
-  process.exitCode = 1;
-}
+'use strict';
+module.exports = /^Version: v(\d+)(?:[-\.][-a-z0-9]+)*$/m;

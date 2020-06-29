@@ -17,7 +17,6 @@
 "use strict";
 
 // Note: We download graal since it's 800MB+ of disk space per platform.
-
 const fs = require("fs");
 const path = require("path");
 const runCommand = require("./run-command.js");
@@ -60,7 +59,7 @@ const NATIVE_IMAGE_BUILD_ARGS = [
   "-H:+ReportExceptionStackTraces",
   "--initialize-at-build-time",
   "-jar",
-  path.resolve(process.cwd(), "dist", "compiler.jar"),
+  path.resolve(process.cwd(), "..", "..", "dist", "compiler.jar"),
 ];
 
 // This script should catch and handle all rejected promises.
@@ -74,6 +73,7 @@ process.on("unhandledRejection", (error) => {
   // Build graal from source
   if (!fs.existsSync(TEMP_PATH)) {
     fs.mkdirSync(TEMP_PATH);
+    process.stdout.write(`Created directory at ${TEMP_PATH}\n`);
   }
 
   let buildSteps = Promise.resolve();

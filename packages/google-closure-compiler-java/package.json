@@ -1,11 +1,10 @@
 {
   "name": "@kristoferbaxter/google-closure-compiler-java",
   "version": "20200614.0.0",
-  "description": "Check, compile, optimize and compress Javascript with Closure-Compiler using Java",
+  "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "main": "index.js",
   "repository": "https://github.com/google/closure-compiler-npm/tree/master/packages/google-closure-compiler-java",
   "homepage": "https://developers.google.com/closure/compiler/",
-  "author": "Chad Killingsworth <chadkillingsworth@gmail.com>",
   "license": "Apache-2.0",
   "keywords": [
     "javascript",
@@ -21,6 +20,9 @@
     "package.json",
     "readme.md"
   ],
+  "devDependencies": {
+    "kleur": "4.0.2"
+  },
   "scripts": {
     "build": "echo \"google-closure-compiler-java build\"",
     "test": "./test.js"

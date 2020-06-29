@@ -58,7 +58,7 @@ module.exports = function(initOptions) {
   const PLUGIN_NAME = 'gulp-google-closure-compiler';
 
   const applySourceMap = require('vinyl-sourcemaps-apply');
-  const chalk = require('chalk');
+  const kleur = require('kleur');
   const File = require('vinyl');
 
   const extraCommandArguments = initOptions ? initOptions.extraArguments : undefined;
@@ -248,7 +248,7 @@ module.exports = function(initOptions) {
       // standard error will contain compilation warnings, log those
       if (errors && errors.trim().length > 0) {
         const logger = this.logger_.warn ? this.logger_.warn : this.logger_;
-        logger(`${chalk.yellow(this.PLUGIN_NAME_)}: ${errors}`);
+        logger(`${kleur.yellow(this.PLUGIN_NAME_)}: ${errors}`);
       }
 
       // non-zero exit means a compilation error
