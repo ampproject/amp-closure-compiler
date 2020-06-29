@@ -18,7 +18,11 @@
 
 const kleur = require("kleur");
 const { promises: fs } = require("fs");
+const { platform } = require('os');
 const { getOutput } = require("./exec.js");
+
+const isLinux = platform() === 'linux';
+const isOSX = platform() === 'darwin';
 
 /**
  * Copy the newly built compiler and the contrib folder to the applicable packages.
@@ -32,15 +36,15 @@ function copyCompilerBinaries() {
       compiledJavaBinaryPath,
       "./packages/google-closure-compiler-java/compiler.jar"
     ),
-    fs.copyFile(
+    isLinux ? fs.copyFile(
       compiledJavaBinaryPath,
       "./packages/google-closure-compiler-linux/compiler.jar"
-    ),
-    fs.copyFile(
+    ) : null,
+    isOSX ? fs.copyFile(
       compiledJavaBinaryPath,
       "./packages/google-closure-compiler-osx/compiler.jar"
-    ),
-  ]);
+    ) : null,
+  ].filter(Boolean));
 }
 
 /**
