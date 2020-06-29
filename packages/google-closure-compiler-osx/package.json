@@ -30,6 +30,7 @@
   "scripts": {
     "build": "./build-image.js",
     "test": "./test.js",
+    "clean": "./remove-os-restrictions.js",
     "restrict": "./add-os-restrictions.js"
   }
 }

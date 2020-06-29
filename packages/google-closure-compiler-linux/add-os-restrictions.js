@@ -22,15 +22,8 @@
  * They can't be present before publication as it errors out the installs.
  */
 
-const fs = require('fs-extra');
+const {promises: fs} = require('fs');
 const path = require('path');
-
-// // Maps of the os marketing name to the platform name used in package.json os restriction fields
-// const osRestrictions = new Map([
-//     ['osx', 'darwin'],
-//     ['linux', 'linux'],
-//     ['windows', 'win32']
-// ]);
 
 (async function() {
   const packagePath = path.resolve(__dirname, 'package.json');
@@ -38,11 +31,3 @@ const path = require('path');
   packageContents.os = ['linux'];
   await fs.writeFile(packagePath, JSON.stringify(packageContents, null, 2) + '\n', 'utf8');
 })();
-
-// // Read the package.json files, add the OS restriction, then write it back.
-// osRestrictions.forEach((platformName, osName) => {
-//   const packagePath = path.resolve(__dirname, '..', 'packages', `google-closure-compiler-${osName}`, 'package.json');
-//   const packageContents = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
-//   packageContents.os = [platformName];
-//   fs.writeFileSync(packagePath, JSON.stringify(packageContents, null, 2) + '\n', 'utf8');
-// });

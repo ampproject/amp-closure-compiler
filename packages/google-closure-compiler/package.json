@@ -52,6 +52,7 @@
   "scripts": {
     "build": "echo \"google-closure-compiler build\"",
     "test": "mocha",
+    "clean": "echo \"google-closure-compiler clean\"",
     "restrict": "echo \"google-closure-compiler restrict\""
   },
   "engines": {

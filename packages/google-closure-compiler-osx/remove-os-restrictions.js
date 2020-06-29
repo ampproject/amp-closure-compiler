@@ -28,6 +28,6 @@ const path = require('path');
 (async function() {
   const packagePath = path.resolve(__dirname, 'package.json');
   const packageContents = JSON.parse(await fs.readFile(packagePath, 'utf8'));
-  packageContents.os = ['darwin'];
+  delete packageContents.os;
   await fs.writeFile(packagePath, JSON.stringify(packageContents, null, 2) + '\n', 'utf8');
 })();

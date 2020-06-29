@@ -2,4 +2,6 @@
 2. Pull the latest files `git lfs pull`.
 3. Ensure tests `yarn test` pass.
 4. Run restriction task (adds os restrictions per OS optional dependency) `yarn restrict`.
+5. Run `node_modules/.bin/lerna version --force-publish='*'`.
 
+NOTE: When complete, run `yarn clean` to ensure `restrict` isn't applied to source.
