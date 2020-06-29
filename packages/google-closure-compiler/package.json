@@ -26,8 +26,8 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "chalk": "2.x",
     "@kristoferbaxter/google-closure-compiler-java": "^20200614.0.0",
+    "kleur": "4.0.2",
     "minimist": "1.x",
     "vinyl": "2.x",
     "vinyl-sourcemaps-apply": "^0.2.0"

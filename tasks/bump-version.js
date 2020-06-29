@@ -21,11 +21,11 @@ const semverMajor = require("semver/functions/major");
 const semverLt = require("semver/functions/lt");
 const fs = require("fs");
 
-const PACKAGE_FOLDER_NAMES = [
-  "google-closure-compiler",
-  "google-closure-compiler-java",
-  "google-closure-compiler-linux",
-  "google-closure-compiler-osx",
+const PACKAGE_LOCATIONS = [
+  "./packages/google-closure-compiler/package.json",
+  "./packages/google-closure-compiler-java/package.json",
+  "./packages/google-closure-compiler-linux/package.json",
+  "./packages/google-closure-compiler-osx/package.json",
 ];
 
 // This script should catch and handle all rejected promises.
@@ -35,21 +35,39 @@ process.on("unhandledRejection", (error) => {
   process.exit(1);
 });
 
+/**
+ * Update a json file with the closure version sepecified, give caller a chance to modify the content too.
+ * @param {string} location 
+ * @param {string} closureVersion 
+ * @param {(parsed: JSON) => JSON} additionalModificationMethod
+ * @return {Promise<void>}
+ */
+async function updatePackage(location, closureVersion, additionalModificationMethod) {
+  const packageContents = await fs.promises.readFile(location, "utf8");
+  let parsed = JSON.parse(packageContents);
+  if (semverLt(parsed.version, closureVersion)) {
+    parsed.version = closureVersion;
+    parsed = additionalModificationMethod(parsed);
+    await fs.promises.writeFile(
+      location,
+      JSON.stringify(parsed, null, 2),
+      "utf8"
+    );
+  }
+}
+
 (async function () {
   // 1. Retrieve Closure Version from NPM version published.
   const closureVersion = `${semverMajor(
-    pkg.devDependencies["google-closure-compiler"]
+    pkg.devDependencies["google-closure-compiler-java"]
   )}.0.0`;
 
+  // 2. Update Lerna configuration with the valid Closure Version
+  await updatePackage("./lerna.json", closureVersion, (parsed) => parsed);
+  
   // 2. Update Major version within each package.
-  for await (const packageFolderName of PACKAGE_FOLDER_NAMES) {
-    const packageLocation = `./packages/${packageFolderName}/package.json`;
-    const packageContents = await fs.readFile(packageLocation, "utf8");
-    const parsed = JSON.parse(packageContents);
-    if (semverLt(parsed.version, closureVersion)) {
-      // Only update the version if its older than the current released `closure-compiler`.
-      parsed.version = closureVersion;
-
+  for await (const packageLocation of PACKAGE_LOCATIONS) {
+    await updatePackage(packageLocation, closureVersion, (parsed) => {
       // Ensure the linked dependencies are also using the current released `closure-compiler`.
       const hatClosureVersion = "^" + closureVersion;
       if (
@@ -80,11 +98,6 @@ process.on("unhandledRejection", (error) => {
           ] = hatClosureVersion;
         }
       }
-      await fs.promises.writeFile(
-        packageLocation,
-        JSON.stringify(parsed, null, 2),
-        "utf8"
-      );
-    }
+    });
   }
 })();

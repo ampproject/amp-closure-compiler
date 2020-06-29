@@ -19,13 +19,13 @@ const fs = require('fs');
 const path = require('path');
 const {spawn} = require('child_process');
 const nativeImagePath = require('./');
-const {RED, GREEN, DIM, RESET} = require('../../build-scripts/colors');
+const kleur = require('kleur');
 
 process.stdout.write('google-closure-compiler-linux\n');
 if (process.platform !== 'linux') {
-  process.stdout.write(`  ${DIM}skipping tests - incorrect platform${RESET}\n`);
+  process.stdout.write(`  ${kleur.dim('skipping tests - incorrect platform')}\n`);
 } else if (fs.existsSync(nativeImagePath)) {
-  process.stdout.write(`  ${GREEN}✓${RESET} ${DIM}compiler binary exists${RESET}\n`);
+  process.stdout.write(`  ${kleur.green('✓')} ${kleur.dim('compiler binary exists')}\n`);
   new Promise(
       (resolve, reject) => {
         const compilerTest = spawn(
@@ -40,7 +40,7 @@ if (process.platform !== 'linux') {
             return reject('non zero exit code');
           }
           process.stdout.write(
-              `  ${GREEN}✓${RESET} ${DIM}compiler version successfully reported${RESET}\n`);
+              `  ${kleur.green('✓')} ${kleur.dim('compiler version successfully reported')}\n`);
           resolve();
         });
       })
@@ -57,16 +57,16 @@ if (process.platform !== 'linux') {
             return reject('non zero exit code');
           }
           process.stdout.write(
-              `  ${GREEN}✓${RESET} ${DIM}compiler help successfully reported${RESET}\n`);
+              `  ${kleur.green('✓')} ${kleur.dim('compiler help successfully reported')}\n`);
           resolve();
         });
       }))
       .catch(err => {
         process.stderr.write((err || '').toString() + '\n');
-        process.stdout.write(`  ${RED}compiler execution tests failed${RESET}\n`);
+        process.stdout.write(`  ${kleur.red('compiler execution tests failed')}\n`);
         process.exitCode = 1;
       });
 } else {
-  process.stdout.write(`  ${RED}compiler binary does not exist${RESET}\n`);
+  process.stdout.write(`  ${kleur.red('compiler binary does not exist')}\n`);
   process.exitCode = 1;
 }

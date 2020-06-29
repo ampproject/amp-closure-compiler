@@ -1,7 +1,7 @@
 {
   "name": "@kristoferbaxter/google-closure-compiler-linux",
   "version": "20200614.0.0",
-  "description": "Check, compile, optimize and compress Javascript with Closure-Compiler using Java",
+  "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "main": "index.js",
   "repository": "https://github.com/google/closure-compiler-npm/tree/master/packages/google-closure-compiler-linux",
   "homepage": "https://developers.google.com/closure/compiler/",
@@ -24,6 +24,9 @@
     "x64",
     "x86"
   ],
+  "devDependencies": {
+    "kleur": "4.0.2"
+  },
   "scripts": {
     "build": "./build-image.js",
     "test": "./test.js",
