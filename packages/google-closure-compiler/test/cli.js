@@ -23,7 +23,7 @@
 'use strict';
 
 const should = require('should');
-const runCommand = require('../../../build-scripts/run-command');
+const runCommand = require('../../../tasks/run-command');
 require('mocha');
 
 process.on('unhandledRejection', e => { throw e; });

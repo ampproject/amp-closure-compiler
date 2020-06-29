@@ -27,7 +27,7 @@
 'use strict';
 
 module.exports = (grunt, pluginOptions) => {
-  const chalk = require('chalk');
+  const kleur = require('kleur');
   const VinylStream = require('./vinyl-stream');
   const Transform = require('stream').Transform;
   const gulpCompilerOptions = {};
@@ -86,7 +86,7 @@ module.exports = (grunt, pluginOptions) => {
       // If an error was encoutered, it will have already been logged
       if (!hadError) {
         if (options.js_output_file) {
-          grunt.log.ok(chalk.cyan(options.js_output_file) + ' created');
+          grunt.log.ok(kleur.cyan(options.js_output_file) + ' created');
         } else {
           grunt.log.ok('Compilation succeeded');
         }
@@ -187,7 +187,7 @@ module.exports = (grunt, pluginOptions) => {
 
       const src = f.src.filter(filepath => {
         if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file ' + chalk.cyan(filepath) + ' not found');
+          grunt.log.warn('Source file ' + kleur.cyan(filepath) + ' not found');
           return false;
         }
         return true;
@@ -195,7 +195,7 @@ module.exports = (grunt, pluginOptions) => {
 
       // Require source files
       if (src.length === 0) {
-        grunt.log.warn('Destination ' + chalk.cyan(f.dest) +
+        grunt.log.warn('Destination ' + kleur.cyan(f.dest) +
             ' not written because src files were empty');
         return;
       } else {
