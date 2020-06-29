@@ -18,18 +18,17 @@
  * @fileoverview Tests for compiler.jar versions
  *
  * @author Chad Killingsworth (chadkillingsworth@gmail.com)
+ * @author Kristofer Baxter (kristofer@kristoferbaxter.com)
  */
 
 "use strict";
 
-// const should = require('should');
 const assert = require("assert");
 const {
   compiler: Compiler,
 } = require("@kristoferbaxter/google-closure-compiler");
 const packageInfo = require("../lerna.json");
 const Semver = require("semver");
-const semverEq = require('semver/functions/eq')
 const compilerVersionMatch = require("./version-match.js");
 const spawn = require("child_process").spawnSync;
 require("mocha");
@@ -37,11 +36,6 @@ require("mocha");
 process.on("unhandledRejection", (e) => {
   throw e;
 });
-
-// const assertError = new should.Assertion('compiler version');
-// assertError.params = {
-//   operator: 'should be a semver parseabe',
-// };
 
 describe("compiler.jar", function () {
   this.timeout(10000);
@@ -71,8 +65,6 @@ describe("compiler.jar", function () {
       assert.strictEqual(
         Semver.major(versionInfo[1] + ".0.0"), Semver.major(packageInfo.version)
       );
-
-      // compilerVersion.major.should.be.equal(packageVer.major);
       done();
     });
   });
@@ -88,7 +80,6 @@ describe("compiler submodule", function () {
       cwd: "./compiler",
     });
     assert.equal(gitCmd.status, 0);
-    // should(gitCmd.status).eql(0);
     const currentTag = gitCmd.stdout.toString().replace(/\s/g, "");
     const mvnVersion = "v" + Semver.major(packageInfo.version);
     let normalizedTag = currentTag;
@@ -96,6 +87,5 @@ describe("compiler submodule", function () {
       normalizedTag = currentTag.replace(/^([-a-z]+-)?(v\d{8})(.*)$/, "$2");
     }
     assert.equal(normalizedTag, mvnVersion);
-    // should(normalizedTag).eql(mvnVersion);
   });
 });
