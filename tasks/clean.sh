@@ -6,5 +6,4 @@ rm ./packages/google-closure-compiler-linux/compiler.jar
 rm ./packages/google-closure-compiler-linux/compiler
 rm ./packages/google-closure-compiler-osx/compiler.jar
 rm ./packages/google-closure-compiler-osx/compiler
-./packages/google-closure-compiler-osx/remove-os-restrictions.js
-./packages/google-closure-compiler-linux/remove-os-restrictions.js
+./tasks/remove-os-restrictions.js
