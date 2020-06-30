@@ -18,7 +18,6 @@
 
 const pkg = require("../package.json");
 const semverMajor = require("semver/functions/major");
-const semverLt = require("semver/functions/lt");
 const fs = require("fs");
 const { platform } = require('os');
 
@@ -49,7 +48,7 @@ process.on("unhandledRejection", (error) => {
 async function updatePackage(location, closureVersion, additionalModificationMethod) {
   const packageContents = await fs.promises.readFile(location, "utf8");
   let parsed = JSON.parse(packageContents);
-  if (semverLt(parsed.version, closureVersion)) {
+  if (semverMajor(parsed.version) !== semverMajor(closureVersion)) {
     parsed.version = closureVersion;
     parsed = additionalModificationMethod(parsed);
     await fs.promises.writeFile(
@@ -102,6 +101,8 @@ async function updatePackage(location, closureVersion, additionalModificationMet
           ] = hatClosureVersion;
         }
       }
+
+      return parsed;
     });
   }
 })();
