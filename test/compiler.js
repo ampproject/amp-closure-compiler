@@ -26,7 +26,7 @@
 const assert = require("assert");
 const {
   compiler: Compiler,
-} = require("@kristoferbaxter/google-closure-compiler");
+} = require("../packages/google-closure-compiler");
 const packageInfo = require("../lerna.json");
 const Semver = require("semver");
 const compilerVersionMatch = require("./version-match.js");

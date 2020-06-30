@@ -29,6 +29,12 @@ jobs:
       run: node ./tasks/bump-version.js
     - name: Compile Native Binary
       run: yarn build
+    - name: Link Native Binary
+      run: |
+        (cd packages/google-closure-compiler-osx && yarn link)
+        (cd packages/google-closure-compiler-linux && yarn link)
+        (cd packages/google-closure-compiler && yarn link "@kristoferbaxter/google-closure-compiler-osx")
+        (cd packages/google-closure-compiler && yarn link "@kristoferbaxter/google-closure-compiler-linux")
     - name: Test Changes
       run: yarn test
     - name: Push Changes
