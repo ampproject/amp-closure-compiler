@@ -2,16 +2,6 @@
   "name": "@kristoferbaxter/google-closure-compiler",
   "version": "20200614.0.1",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
-  "repository": "https://github.com/google/closure-compiler-npm/tree/master/packages/google-closure-compiler",
-  "keywords": [
-    "javascript",
-    "compiler",
-    "optimizer",
-    "minifier",
-    "closure",
-    "gulpplugin",
-    "gruntplugin"
-  ],
   "bin": {
     "google-closure-compiler": "cli.js"
   },

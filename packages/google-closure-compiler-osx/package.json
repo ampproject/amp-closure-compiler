@@ -3,8 +3,6 @@
   "version": "20200614.0.1",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "main": "index.js",
-  "repository": "https://github.com/google/closure-compiler-npm/tree/master/packages/google-closure-compiler-osx",
-  "homepage": "https://developers.google.com/closure/compiler/",
   "license": "Apache-2.0",
   "keywords": [
     "javascript",
