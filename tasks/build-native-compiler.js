@@ -42,20 +42,7 @@ const NATIVE_IMAGE_BUILD_ARGS = [
     __dirname,
     "reflection-config.json"
   )}`,
-  "-H:IncludeResources=(externs.zip)|(.*(js|txt))", //.replace(
-  //   /[\|\(\)]/g,
-  //   (match) => {
-  //     if (GRAAL_OS === "windows") {
-  //       // Escape the '|' character in a  windows batch command
-  //       // See https://stackoverflow.com/a/16018942/1211524
-  //       if (match === "|") {
-  //         return "%PIPE%";
-  //       }
-  //       return `^${match}`;
-  //     }
-  //     return "|";
-  //   }
-  // ),
+  "-H:IncludeResources=(externs.zip)|(.*(js|txt))",
   "-H:+ReportExceptionStackTraces",
   "--initialize-at-build-time",
   "-jar",
