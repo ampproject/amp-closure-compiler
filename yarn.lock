@@ -116,11 +116,6 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
-"@kristoferbaxter/google-closure-compiler-linux@^20200517.0.0":
-  version "20200517.0.0"
-  resolved "https://registry.yarnpkg.com/@kristoferbaxter/google-closure-compiler-linux/-/google-closure-compiler-linux-20200517.0.0.tgz#3a48cb8286e0a82f1116e619a33c129dd985423f"
-  integrity sha512-o3XlCQcczY0N+vC1hxcbmOwtF20SXxWz1OkKTDo9wF99oHbHuHxSI/vR2Id4DKuQhAfIJo+fuxuM35m61x4T+w==
-
 "@lerna/add@3.21.0":
   version "3.21.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.21.0.tgz#27007bde71cc7b0a2969ab3c2f0ae41578b4577b"

@@ -24,10 +24,6 @@
 
 // defer loading modules. The jscomp file is rather large. Don't load it unless it's actually referenced.
 class Main {
-  static get grunt() {
-    return require('./lib/grunt');
-  }
-
   static get gulp() {
     return require('./lib/gulp');
   }

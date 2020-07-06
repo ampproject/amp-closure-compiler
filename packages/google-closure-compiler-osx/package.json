@@ -29,8 +29,5 @@
     "build": "./build-image.js",
     "test": "./test.js",
     "restrict": "./add-os-restrictions.js"
-  },
-  "os": [
-    "darwin"
-  ]
+  }
 }

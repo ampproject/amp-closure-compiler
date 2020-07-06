@@ -13,14 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * @fileoverview Convert a string of JSON encoded files
- * back to an array of vinyl files
- *
- * @author Chad Killingsworth (chadkillingsworth@gmail.com)
- */
-
 'use strict';
 
 const File = require('vinyl');
@@ -31,15 +23,15 @@ const File = require('vinyl');
  */
 module.exports = fileList => {
   let outputFiles = [];
-  for (let i = 0; i < fileList.length; i++) {
-    const file = new File({
-      path: fileList[i].path,
-      contents: Buffer.from(fileList[i].src)
+  for (const file of fileList) {
+    const newFile = new File({
+      path: file.path,
+      contents: Buffer.from(file.src)
     });
-    if (fileList[i].source_map || fileList[i].sourceMap) {
-      file.sourceMap = JSON.parse(fileList[i].source_map || fileList[i].sourceMap);
+    if (file.source_map || file.sourceMap) {
+      newFile.sourceMap = JSON.parse(file.source_map || file.sourceMap);
     }
-    outputFiles.push(file);
+    outputFiles.push(newFile);
   }
 
   return outputFiles;
