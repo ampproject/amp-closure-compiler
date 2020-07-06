@@ -1,6 +1,6 @@
 {
   "name": "@kristoferbaxter/google-closure-compiler-linux",
-  "version": "20200517.2.0",
+  "version": "20200517.2.1",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "main": "index.js",
   "license": "Apache-2.0",
@@ -29,5 +29,8 @@
     "build": "./build-image.js",
     "test": "./test.js",
     "restrict": "./add-os-restrictions.js"
-  }
+  },
+  "os": [
+    "linux"
+  ]
 }
