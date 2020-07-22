@@ -1,5 +1,5 @@
 {
-  "name": "@kristoferbaxter/google-closure-compiler-java",
+  "name": "@ampproject/google-closure-compiler-java",
   "version": "20200517.2.1",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "main": "index.js",
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "echo \"google-closure-compiler-java build\"",
-    "test": "./test.js",
+    "test": "node ./test.js",
     "clean": "echo \"google-closure-compiler-java clean\"",
     "restrict": "echo \"google-closure-compiler-java restrict\""
   }

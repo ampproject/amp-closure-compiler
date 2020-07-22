@@ -1,5 +1,5 @@
 {
-  "name": "@ampproject/google-closure-compiler-linux",
+  "name": "@ampproject/google-closure-compiler-windows",
   "version": "20200517.2.1",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "main": "index.js",
@@ -9,11 +9,10 @@
     "compiler",
     "optimizer",
     "minifier",
-    "closure",
-    "java"
+    "closure"
   ],
   "files": [
-    "compiler",
+    "compiler.exe",
     "index.js",
     "package.json",
     "readme.md"
@@ -22,9 +21,7 @@
     "x64",
     "x86"
   ],
-  "devDependencies": {
-    "kleur": "4.0.2"
-  },
+  "preferUnplugged": true,
   "scripts": {
     "build": "node ./build-image.js",
     "test": "node ./test.js",

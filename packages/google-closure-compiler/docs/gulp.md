@@ -7,7 +7,7 @@ Options are a direct match to the compiler flags without the leading "--".
 ## Basic Configuration Example:
 
 ```js
-const closureCompiler = require('@kristoferbaxter/google-closure-compiler').gulp();
+const closureCompiler = require('@ampproject/google-closure-compiler').gulp();
 
 gulp.task('js-compile', function () {
   return gulp.src('./src/js/**/*.js', {base: './'})
@@ -35,7 +35,7 @@ compiler. With large source sets this may require a large amount of memory.
 Closure-compiler can natively expand file globs which will greatly alleviate this issue.
 
 ```js
-const compilerPackage = require('@kristoferbaxter/google-closure-compiler');
+const compilerPackage = require('@ampproject/google-closure-compiler');
 const closureCompiler = compilerPackage.gulp();
 
 gulp.task('js-compile', function () {
@@ -63,7 +63,7 @@ this behavior.
 The gulp plugin supports gulp sourcemaps.
 
 ```js
-const closureCompiler = require('@kristoferbaxter/google-closure-compiler').gulp();
+const closureCompiler = require('@ampproject/google-closure-compiler').gulp();
 const sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('js-compile', function () {
@@ -87,7 +87,7 @@ Some users may wish to pass the java vm extra arguments - such as to specify the
 be allocated. Both the grunt and gulp plugins support this.
 
 ```js
-const closureCompiler = require('@kristoferbaxter/google-closure-compiler').gulp({
+const closureCompiler = require('@ampproject/google-closure-compiler').gulp({
   extraArguments: ['-Xms2048m']
 });
 ```

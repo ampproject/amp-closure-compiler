@@ -101,7 +101,7 @@ Additionally, community members have created plugins leveraging this library.
 Override the path before first use.
 
 ```
-const Compiler = require('@kristoferbaxter/google-closure-compiler');
+const Compiler = require('@ampproject/google-closure-compiler');
 
 Compiler.prototype.javaPath = '/node_modules/MODULE_NAME/jre/jre1.8.0_131.jre/Contents/Home/bin/java';
 
@@ -123,7 +123,7 @@ npm install closure-gun
 Then point the package to use closure-gun rather than the JDK.
 
 ```js
-const compilerPackage = require('@kristoferbaxter/google-closure-compiler');
+const compilerPackage = require('@ampproject/google-closure-compiler');
 
 compilerPackage.compiler.JAR_PATH = undefined;
 compilerPackage.compiler.prototype.javaPath = './node_modules/.bin/closure-gun'
@@ -138,7 +138,7 @@ In addition, it exposes a static property with the path to the compiler jar file
 ### Java Version
 
 ```js
-const ClosureCompiler = require('@kristoferbaxter/google-closure-compiler').compiler;
+const ClosureCompiler = require('@ampproject/google-closure-compiler').compiler;
 
 console.log(ClosureCompiler.COMPILER_PATH); // absolute path to the compiler jar
 console.log(ClosureCompiler.CONTRIB_PATH); // absolute path to the contrib folder which contain externs
@@ -156,7 +156,7 @@ const compilerProcess = closureCompiler.run((exitCode, stdOut, stdErr) => {
 ### JavaScript Version
 
 ```js
-const ClosureCompiler = require('@kristoferbaxter/google-closure-compiler').jsCompiler;
+const ClosureCompiler = require('@ampproject/google-closure-compiler').jsCompiler;
 
 console.log(ClosureCompiler.CONTRIB_PATH); // absolute path to the contrib folder which contains externs
 

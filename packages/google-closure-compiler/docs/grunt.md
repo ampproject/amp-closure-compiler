@@ -6,7 +6,7 @@ Task targets, files and options may be specified according to the grunt
 Include the plugin in your Gruntfile.js:
 
 ```js
-require('@kristoferbaxter/google-closure-compiler').grunt(grunt, {
+require('@ampproject/google-closure-compiler').grunt(grunt, {
   platform: ['native', 'java', 'javascript'],
   compile_in_batches: require('os').cpus().length
 });
@@ -19,7 +19,7 @@ The option can be either a string or an array where the first supported platform
 ## Basic Configuration Example:
 
 ```js
-require('@kristoferbaxter/google-closure-compiler').grunt(grunt);
+require('@ampproject/google-closure-compiler').grunt(grunt);
 
 // Project configuration.
 grunt.initConfig({
@@ -43,7 +43,7 @@ grunt.initConfig({
 
 ```js
 
-const compilerPackage = require('@kristoferbaxter/google-closure-compiler');
+const compilerPackage = require('@ampproject/google-closure-compiler');
 compilerPackage.grunt(grunt);
 
 // Project configuration.
@@ -72,7 +72,7 @@ Some users may wish to pass the java vm extra arguments - such as to specify the
 be allocated. Both the grunt and gulp plugins support this.
 
 ```js
-require('@kristoferbaxter/google-closure-compiler').grunt(grunt, {
+require('@ampproject/google-closure-compiler').grunt(grunt, {
   platform: 'java',
   extraArguments: ['-Xms2048m']
 });

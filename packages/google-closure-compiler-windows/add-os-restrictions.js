@@ -25,17 +25,9 @@
 const {promises: fs} = require('fs');
 const path = require('path');
 
-const RESTRICTED_OS_PACKAGES = [
-  './packages/google-closure-compiler-osx',
-  './packages/google-closure-compiler-linux',
-  './packages/google-closure-compiler-windows',
-];
-
 (async function() {
-  for await (const pkg of RESTRICTED_OS_PACKAGES) {
-    const packagePath = path.resolve(pkg, 'package.json');
-    const packageContents = JSON.parse(await fs.readFile(packagePath, 'utf8'));
-    delete packageContents.os;
-    await fs.writeFile(packagePath, JSON.stringify(packageContents, null, 2) + '\n', 'utf8');
-  }
+  const packagePath = path.resolve(__dirname, 'package.json');
+  const packageContents = JSON.parse(await fs.readFile(packagePath, 'utf8'));
+  packageContents.os = ['win32'];
+  await fs.writeFile(packagePath, JSON.stringify(packageContents, null, 2) + '\n', 'utf8');
 })();
