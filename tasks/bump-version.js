@@ -23,12 +23,14 @@ const { platform } = require('os');
 
 const isLinux = platform() === 'linux';
 const isOSX = platform() === 'darwin';
+const isWindows = platform() === 'win32';
 
 const PACKAGE_LOCATIONS = [
   "./packages/google-closure-compiler/package.json",
   "./packages/google-closure-compiler-java/package.json",
   isLinux ? "./packages/google-closure-compiler-linux/package.json" : null,
   isOSX ? "./packages/google-closure-compiler-osx/package.json" : null,
+  isWindows ? "./packages/google-closure-compiler-windows/package.json" : null,
 ].filter(Boolean);
 
 // This script should catch and handle all rejected promises.
@@ -40,8 +42,8 @@ process.on("unhandledRejection", (error) => {
 
 /**
  * Update a json file with the closure version sepecified, give caller a chance to modify the content too.
- * @param {string} location 
- * @param {string} closureVersion 
+ * @param {string} location
+ * @param {string} closureVersion
  * @param {(parsed: JSON) => JSON} additionalModificationMethod
  * @return {Promise<void>}
  */
@@ -67,7 +69,7 @@ async function updatePackage(location, closureVersion, additionalModificationMet
 
   // 2. Update Lerna configuration with the valid Closure Version
   await updatePackage("./lerna.json", closureVersion, (parsed) => parsed);
-  
+
   // 2. Update Major version within each package.
   for await (const packageLocation of PACKAGE_LOCATIONS) {
     await updatePackage(packageLocation, closureVersion, (parsed) => {
@@ -75,29 +77,38 @@ async function updatePackage(location, closureVersion, additionalModificationMet
       const hatClosureVersion = "^" + closureVersion;
       if (
         parsed.dependencies &&
-        parsed.dependencies["@kristoferbaxter/google-closure-compiler-java"]
+        parsed.dependencies["@ampproject/google-closure-compiler-java"]
       ) {
         parsed.dependencies[
-          "@kristoferbaxter/google-closure-compiler-java"
+          "@ampproject/google-closure-compiler-java"
         ] = hatClosureVersion;
       }
       if (parsed.optionalDependencies) {
         if (
           parsed.optionalDependencies[
-            "@kristoferbaxter/google-closure-compiler-linux"
+            "@ampproject/google-closure-compiler-linux"
           ]
         ) {
           parsed.optionalDependencies[
-            "@kristoferbaxter/google-closure-compiler-linux"
+            "@ampproject/google-closure-compiler-linux"
           ] = hatClosureVersion;
         }
         if (
           parsed.optionalDependencies[
-            "@kristoferbaxter/google-closure-compiler-osx"
+            "@ampproject/google-closure-compiler-osx"
           ]
         ) {
           parsed.optionalDependencies[
-            "@kristoferbaxter/google-closure-compiler-osx"
+            "@ampproject/google-closure-compiler-osx"
+          ] = hatClosureVersion;
+        }
+        if (
+          parsed.optionalDependencies[
+            "@ampproject/google-closure-compiler-windows"
+          ]
+        ) {
+          parsed.optionalDependencies[
+            "@ampproject/google-closure-compiler-windows"
           ] = hatClosureVersion;
         }
       }

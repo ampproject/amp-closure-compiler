@@ -1,28 +1,27 @@
 name: Build Binaries
 
-on: [pull_request]
+on: [pull_request, push]
 
 jobs:
   build:
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest]
+        platform: [ubuntu-latest, macos-latest, windows-latest]
         node-version: [12.x]
     runs-on: ${{ matrix.platform }}
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
       with:
         submodules: true
         lfs: true
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '8.0.x' # The JDK version to make available on the path.
+    - uses: seanmiddleditch/gha-setup-vsdevenv@master
+      if: ${{ matrix.platform == 'windows-latest' }}
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2-beta
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install Dependencies
-      run: yarn install
+      run: yarn
     - name: Remove OS Restrictions
       run: node ./tasks/remove-os-restrictions.js
     - name: Upgrade Packages to Specified Closure Version
@@ -31,14 +30,17 @@ jobs:
       run: yarn build
     - name: Link Native Binary
       run: |
-        (cd packages/google-closure-compiler-osx && yarn link)
-        (cd packages/google-closure-compiler-linux && yarn link)
-        (cd packages/google-closure-compiler && yarn link "@kristoferbaxter/google-closure-compiler-osx")
-        (cd packages/google-closure-compiler && yarn link "@kristoferbaxter/google-closure-compiler-linux")
+        (yarn link --cwd packages/google-closure-compiler-osx)
+        (yarn link --cwd packages/google-closure-compiler-linux)
+        (yarn link --cwd packages/google-closure-compiler-windows)
+        (yarn link "@ampproject/google-closure-compiler-osx" --cwd packages/google-closure-compiler)
+        (yarn link "@ampproject/google-closure-compiler-linux" --cwd packages/google-closure-compiler)
+        (yarn link "@ampproject/google-closure-compiler-windows" --cwd packages/google-closure-compiler)
     - name: Test Changes
       run: yarn test
     - name: Push Changes
       uses: kristoferbaxter/github-push-action@master
+      if: ${{ github.event_name == 'push' }}
       with:
         force: true
         github_token: ${{ secrets.GITHUB_TOKEN }}

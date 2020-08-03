@@ -23,6 +23,7 @@ const { getOutput } = require("./exec.js");
 
 const isLinux = platform() === 'linux';
 const isOSX = platform() === 'darwin';
+const isWindows = platform() === 'win32';
 
 /**
  * Copy the newly built compiler and the contrib folder to the applicable packages.
@@ -44,6 +45,10 @@ function copyCompilerBinaries() {
       compiledJavaBinaryPath,
       "./packages/google-closure-compiler-osx/compiler.jar"
     ) : null,
+    isWindows ? fs.copyFile(
+      compiledJavaBinaryPath,
+      "./packages/google-closure-compiler-windows/compiler.jar"
+    ) : null,
   ].filter(Boolean));
 }
 
@@ -52,9 +57,16 @@ function copyCompilerBinaries() {
  * given subdirectory of build-system/runner/dist/ (to enable concurrent usage)
  */
 (async function () {
-  const compiledJarDir = "dist";
-  const generateCmd = `./third_party/ant/bin/ant -buildfile tasks/build.xml -Ddist.dir ${compiledJarDir} jar`;
-  const result = getOutput(generateCmd);
+  const compiledJarDir = 'dist';
+  const buildFile = 'tasks/build.xml';
+  const antExecutable = isWindows ? 'third_party\\ant\\bin\\ant.bat' : './third_party/ant/bin/ant';
+  const generateCmd = `${antExecutable} -buildfile ${buildFile} -Ddist.dir ${compiledJarDir} jar`;
+  console.log(
+    kleur.green("INFO: ") +
+      "Generating custom closure compiler by running " +
+      kleur.cyan(generateCmd)
+  );
+  const result = getOutput(generateCmd, {stdio: 'inherit'});
   if (0 !== result.status) {
     console.log(
       kleur.red("ERROR: ") +

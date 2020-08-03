@@ -16,12 +16,23 @@
 'use strict';
 
 function getNativeImagePath() {
-  const suffix = process.platform === 'darwin' ? 'osx' : 'linux';
-
+  if (process.platform === 'darwin') {
+    try {
+      return require('@ampproject/google-closure-compiler-osx');
+    } catch (e) {
+      return;
+    }
+  }
+  if (process.platform === 'win32') {
+    try {
+      return require('@ampproject/google-closure-compiler-windows');
+    } catch (e) {
+      return;
+    }
+  }
   try {
-    return require(`@kristoferbaxter/google-closure-compiler-${suffix}`);
+    return require('@ampproject/google-closure-compiler-linux');
   } catch (e) {
-    return;
   }
 }
 

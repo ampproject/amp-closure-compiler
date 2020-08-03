@@ -1,5 +1,5 @@
 {
-  "name": "@kristoferbaxter/google-closure-compiler-osx",
+  "name": "@ampproject/google-closure-compiler-osx",
   "version": "20200517.2.1",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "main": "index.js",
@@ -26,11 +26,8 @@
     "kleur": "4.0.2"
   },
   "scripts": {
-    "build": "./build-image.js",
-    "test": "./test.js",
-    "restrict": "./add-os-restrictions.js"
-  },
-  "os": [
-    "darwin"
-  ]
+    "build": "node ./build-image.js",
+    "test": "node ./test.js",
+    "restrict": "node ./add-os-restrictions.js"
+  }
 }
