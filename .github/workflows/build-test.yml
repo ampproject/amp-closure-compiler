@@ -39,8 +39,8 @@ jobs:
     - name: Test Changes
       run: yarn test
     - uses: stefanzweifel/git-auto-commit-action@v4
-      if: ${{ github.event_name == 'push' }}
       with:
         commit_message: Push new compiler binaries
+        push_options: '--force'
         file_pattern: packages/google-closure-compiler-*/compiler*
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        skip_dirty_check: true
