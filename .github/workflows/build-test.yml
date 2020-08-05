@@ -38,10 +38,9 @@ jobs:
         (yarn link "@ampproject/google-closure-compiler-windows" --cwd packages/google-closure-compiler)
     - name: Test Changes
       run: yarn test
-    - name: Push Changes
-      uses: kristoferbaxter/github-push-action@master
+    - uses: stefanzweifel/git-auto-commit-action@v4
       if: ${{ github.event_name == 'push' }}
       with:
-        force: true
+        commit_message: Push new compiler binaries
+        file_pattern: packages/google-closure-compiler-*/compiler*
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.head_ref }}
