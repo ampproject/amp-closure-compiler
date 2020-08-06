@@ -41,7 +41,7 @@ jobs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       if: ${{ github.event_name == 'push' }}
       with:
-        commit_message: Push new compiler binaries
+        commit_message: "Push new compiler binaries on ${{ matrix.platform }}"
         push_options: '--force'
         file_pattern: packages/google-closure-compiler-*/compiler*
         skip_dirty_check: true
