@@ -10,11 +10,13 @@ jobs:
         node-version: [12.x]
     runs-on: ${{ matrix.platform }}
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout Repo
+      uses: actions/checkout@v2
       with:
         submodules: true
         lfs: true
-    - uses: seanmiddleditch/gha-setup-vsdevenv@master
+    - name: Set up Windows Dev Environment (skipped on Linux and macOS)
+      uses: seanmiddleditch/gha-setup-vsdevenv@master
       if: ${{ matrix.platform == 'windows-latest' }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2-beta
@@ -38,10 +40,13 @@ jobs:
         (yarn link "@ampproject/google-closure-compiler-windows" --cwd packages/google-closure-compiler)
     - name: Test Changes
       run: yarn test
-    - uses: stefanzweifel/git-auto-commit-action@v4
+    - name: Push Native Binary
+      uses: github-actions-x/commit@v2.6
       if: ${{ github.event_name == 'push' }}
       with:
-        commit_message: "Push new compiler binaries on ${{ matrix.platform }}"
-        push_options: '--force'
-        file_pattern: packages/google-closure-compiler-*/compiler*
-        skip_dirty_check: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        push-branch: 'master'
+        commit-message: "Push new compiler binaries on ${{ matrix.platform }}"
+        force-add: 'true'
+        files: packages/google-closure-compiler-*/compiler*
+        rebase: 'true'
