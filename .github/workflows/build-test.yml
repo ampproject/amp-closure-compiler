@@ -41,6 +41,5 @@ jobs:
     - name: Test Changes
       run: yarn test
     - name: Push Native Binaries
-      uses: github-actions-x/commit@v2.6
       if: ${{ github.event_name == 'push' }}
       run: node ./tasks/push-binaries.js
