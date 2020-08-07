@@ -40,13 +40,7 @@ jobs:
         (yarn link "@ampproject/google-closure-compiler-windows" --cwd packages/google-closure-compiler)
     - name: Test Changes
       run: yarn test
-    - name: Push Native Binary
+    - name: Push Native Binaries
       uses: github-actions-x/commit@v2.6
       if: ${{ github.event_name == 'push' }}
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        push-branch: 'master'
-        commit-message: "Push new compiler binaries on ${{ matrix.platform }}"
-        force-add: 'true'
-        files: packages/google-closure-compiler-*/compiler*
-        rebase: 'true'
+      run: node ./tasks/push-binaries.js
