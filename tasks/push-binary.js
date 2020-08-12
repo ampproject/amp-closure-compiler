@@ -29,15 +29,19 @@ const platformOsMap = {
 }
 
 /**
- * Push all compiler binaries built on this OS after syncing to origin
+ * Push the compiler binary built on this OS after syncing to origin
  **/
-(async function () {
+async function main() {
   const osName = platformOsMap[process.platform];
-  const compilerBinaries = path.join('packages', `google-closure-compiler-${osName}`, 'compiler*')
-  execOrDie(`git add ${compilerBinaries}`);
-  execOrDie(`git commit -m "Push new ${osName} compiler binaries"`);
-  execOrDie('git pull --rebase');
+  const nativeCompilerGlob = path.join('packages', `google-closure-compiler-${osName}`, 'compiler*')
+
+  execOrDie(`git config --global user.name "${process.env.GITHUB_ACTOR}"`);
+  execOrDie(`git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`);
+  execOrDie(`git add ${nativeCompilerGlob}`);
+  execOrDie(`git commit -m "Updated compiler binary for ${osName}"`);
+  execOrDie('git checkout -- .');
+  execOrDie('git pull origin --rebase');
   execOrDie('git push');
-})();
+}
 
-
+main();

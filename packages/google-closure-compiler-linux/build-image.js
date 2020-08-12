@@ -26,9 +26,7 @@ const path = require('path');
 const kleur = require('kleur');
 const {spawn} = require('child_process');
 
-if (fs.existsSync(path.resolve(__dirname, 'compiler'))) {
-  process.stdout.write(kleur.dim('  google-closure-compiler-linux binary already exists\n'));
-} else if (process.platform !== 'linux') {
+if (process.platform !== 'linux') {
   process.stdout.write(kleur.dim('  google-closure-compiler-linux build wrong platform\n'));
 } else {
   process.stdout.write(kleur.dim('  google-closure-compiler-linux building image\n'));

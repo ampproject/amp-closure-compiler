@@ -26,10 +26,7 @@ const path = require('path');
 const kleur = require('kleur');
 const {spawn} = require('child_process');
 
-if (fs.existsSync(path.resolve(__dirname, 'compiler'))) {
-  process.stdout.write(kleur.dim('  google-closure-compiler-windows binary already exists\n'));
-  process.exit(0);
-} else if (process.platform !== 'win32') {
+if (process.platform !== 'win32') {
   process.stdout.write(kleur.dim('  google-closure-compiler-windows build wrong platform\n'));
   process.exit(0);
 } else {
