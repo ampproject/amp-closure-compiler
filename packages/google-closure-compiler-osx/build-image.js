@@ -26,9 +26,7 @@ const path = require('path');
 const kleur = require('kleur');
 const {spawn} = require('child_process');
 
-if (fs.existsSync(path.resolve(__dirname, 'compiler'))) {
-  process.stdout.write(kleur.dim('  google-closure-compiler-osx binary already exists\n'));
-} else if (process.platform !== 'darwin') {
+if (process.platform !== 'darwin') {
   process.stdout.write(kleur.dim('  google-closure-compiler-osx build wrong platform\n'));
 } else {
   process.stdout.write(kleur.dim('  google-closure-compiler-osx building image\n'));

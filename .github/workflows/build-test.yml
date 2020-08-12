@@ -1,7 +1,11 @@
-name: Build Binaries
-
-on: [pull_request, push]
-
+name: Build and Push Native Compiler Binaries
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 jobs:
   build:
     strategy:
@@ -13,7 +17,6 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v2
       with:
-        submodules: true
         lfs: true
     - name: Set up Windows Dev Environment (skipped on Linux and macOS)
       uses: seanmiddleditch/gha-setup-vsdevenv@master
@@ -40,6 +43,6 @@ jobs:
         (yarn link "@ampproject/google-closure-compiler-windows" --cwd packages/google-closure-compiler)
     - name: Test Changes
       run: yarn test
-    - name: Push Native Binaries
+    - name: Push Native Binary for ${{ matrix.platform }}
       if: ${{ github.event_name == 'push' }}
-      run: node ./tasks/push-binaries.js
+      run: node ./tasks/push-binary.js
