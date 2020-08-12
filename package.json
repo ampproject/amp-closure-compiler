@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": {
-    "packages": ["packages/*"],
-    "nohoist": ["**/mocha"]
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/mocha"
+    ]
   },
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "repository": {
@@ -14,7 +18,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "del": "5.1.0",
-    "google-closure-compiler-java": "20200517.0.0",
+    "google-closure-compiler-java": "20200719.0.0",
     "kleur": "4.0.2",
     "lerna": "^3.22.1",
     "mocha": "^6.x",
