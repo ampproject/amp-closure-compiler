@@ -22,9 +22,6 @@
     "kleur": "4.0.2"
   },
   "scripts": {
-    "build": "echo \"google-closure-compiler-java build\"",
-    "test": "node ./test.js",
-    "clean": "echo \"google-closure-compiler-java clean\"",
-    "restrict": "echo \"google-closure-compiler-java restrict\""
+    "test": "node ./test.js"
   }
 }

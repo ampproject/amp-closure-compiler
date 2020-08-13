@@ -17,10 +17,11 @@
 "use strict";
 
 const { exec } = require("./exec.js");
+const { getOsName } = require('./utils.js');
 
 /**
  * Restrict the usage of each optional dependency per OS
  **/
 (async function () {
-  exec('yarn workspaces run restrict');
+  exec('node ./add-os-restrictions.js', {cwd: `packages/google-closure-compiler-${getOsName()}`});
 })();

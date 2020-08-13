@@ -22,6 +22,6 @@ const { execOrDie } = require("./exec.js");
  * Run the build commands and fail the script if any of them failed
  **/
 (async function () {
-  execOrDie('node ./tasks/build-compiler.js');
-  execOrDie('yarn workspaces run build');
+  execOrDie('node ./tasks/build-java-compiler.js');
+  execOrDie('node ./tasks/build-native-compiler.js');
 })();

@@ -17,28 +17,18 @@
 "use strict";
 
 const path = require('path');
-const { execOrDie } = require("./exec.js");
-
-/**
- * Mapping from process.platform to the OS name / directory.
- */
-const platformOsMap = {
-  linux: 'linux',
-  darwin: 'osx',
-  win32: 'windows',
-}
+const { execOrDie } = require('./exec.js');
+const { getOsName } = require('./utils.js');
 
 /**
  * Push the compiler binary built on this OS after syncing to origin
  **/
 async function main() {
-  const osName = platformOsMap[process.platform];
-  const nativeCompilerGlob = path.join('packages', `google-closure-compiler-${osName}`, 'compiler*')
-
+  const nativeCompilerGlob = path.join('packages', `google-closure-compiler-${getOsName()}`, 'compiler*')
   execOrDie(`git config --global user.name "${process.env.GITHUB_ACTOR}"`);
   execOrDie(`git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`);
   execOrDie(`git add ${nativeCompilerGlob}`);
-  execOrDie(`git commit -m "Updated compiler binary for ${osName}"`);
+  execOrDie(`git commit -m "📦 Updated compiler binary for ${osName}"`);
   execOrDie('git checkout -- .');
   execOrDie('git pull origin --rebase');
   execOrDie('git push');

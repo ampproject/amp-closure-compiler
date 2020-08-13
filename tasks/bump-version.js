@@ -55,7 +55,7 @@ async function updatePackage(location, closureVersion, additionalModificationMet
     parsed = additionalModificationMethod(parsed);
     await fs.promises.writeFile(
       location,
-      JSON.stringify(parsed, null, 2),
+      JSON.stringify(parsed, null, 2) + '\n',
       "utf8"
     );
   }
@@ -64,7 +64,7 @@ async function updatePackage(location, closureVersion, additionalModificationMet
 (async function () {
   // 1. Retrieve Closure Version from NPM version published.
   const closureVersion = `${semverMajor(
-    pkg.devDependencies["google-closure-compiler-java"]
+    pkg.dependencies["google-closure-compiler-java"]
   )}.0.0`;
 
   // 2. Update Lerna configuration with the valid Closure Version
@@ -74,14 +74,13 @@ async function updatePackage(location, closureVersion, additionalModificationMet
   for await (const packageLocation of PACKAGE_LOCATIONS) {
     await updatePackage(packageLocation, closureVersion, (parsed) => {
       // Ensure the linked dependencies are also using the current released `closure-compiler`.
-      const hatClosureVersion = "^" + closureVersion;
       if (
         parsed.dependencies &&
         parsed.dependencies["@ampproject/google-closure-compiler-java"]
       ) {
         parsed.dependencies[
           "@ampproject/google-closure-compiler-java"
-        ] = hatClosureVersion;
+        ] = closureVersion;
       }
       if (parsed.optionalDependencies) {
         if (
@@ -91,7 +90,7 @@ async function updatePackage(location, closureVersion, additionalModificationMet
         ) {
           parsed.optionalDependencies[
             "@ampproject/google-closure-compiler-linux"
-          ] = hatClosureVersion;
+          ] = closureVersion;
         }
         if (
           parsed.optionalDependencies[
@@ -100,7 +99,7 @@ async function updatePackage(location, closureVersion, additionalModificationMet
         ) {
           parsed.optionalDependencies[
             "@ampproject/google-closure-compiler-osx"
-          ] = hatClosureVersion;
+          ] = closureVersion;
         }
         if (
           parsed.optionalDependencies[
@@ -109,7 +108,7 @@ async function updatePackage(location, closureVersion, additionalModificationMet
         ) {
           parsed.optionalDependencies[
             "@ampproject/google-closure-compiler-windows"
-          ] = hatClosureVersion;
+          ] = closureVersion;
         }
       }
 

@@ -19,11 +19,8 @@
 const kleur = require("kleur");
 const { promises: fs } = require("fs");
 const { platform } = require('os');
-const { getOutput } = require("./exec.js");
-
-const isLinux = platform() === 'linux';
-const isOSX = platform() === 'darwin';
-const isWindows = platform() === 'win32';
+const { getOsName } = require('./utils.js');
+const { getOutput } = require('./exec.js');
 
 /**
  * Copy the newly built compiler and the contrib folder to the applicable packages.
@@ -37,19 +34,11 @@ function copyCompilerBinaries() {
       compiledJavaBinaryPath,
       "./packages/google-closure-compiler-java/compiler.jar"
     ),
-    isLinux ? fs.copyFile(
+    fs.copyFile(
       compiledJavaBinaryPath,
-      "./packages/google-closure-compiler-linux/compiler.jar"
-    ) : null,
-    isOSX ? fs.copyFile(
-      compiledJavaBinaryPath,
-      "./packages/google-closure-compiler-osx/compiler.jar"
-    ) : null,
-    isWindows ? fs.copyFile(
-      compiledJavaBinaryPath,
-      "./packages/google-closure-compiler-windows/compiler.jar"
-    ) : null,
-  ].filter(Boolean));
+      `./packages/google-closure-compiler-${getOsName()}/compiler.jar`
+    ),
+  ]);
 }
 
 /**
@@ -59,7 +48,7 @@ function copyCompilerBinaries() {
 (async function () {
   const compiledJarDir = 'dist';
   const buildFile = 'tasks/build.xml';
-  const antExecutable = isWindows ? 'third_party\\ant\\bin\\ant.bat' : './third_party/ant/bin/ant';
+  const antExecutable = getOsName() == 'windows' ? 'third_party\\ant\\bin\\ant.bat' : './third_party/ant/bin/ant';
   const generateCmd = `${antExecutable} -buildfile ${buildFile} -Ddist.dir ${compiledJarDir} jar`;
   console.log(
     kleur.green("INFO: ") +

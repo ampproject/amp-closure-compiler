@@ -58,7 +58,7 @@ const NATIVE_IMAGE_BUILD_ARGS = [
   "-H:+ReportExceptionStackTraces",
   "--initialize-at-build-time",
   "-jar",
-  path.resolve(process.cwd(), "..", "..", "dist", "compiler.jar"),
+  path.resolve(process.cwd(), "dist", "compiler.jar"),
 ].join(' ');
 
 // This script should catch and handle all rejected promises.

@@ -1,15 +1,6 @@
 {
   "name": "@ampproject/amp-closure-compiler",
-  "version": "1.0.0",
-  "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ],
-    "nohoist": [
-      "**/mocha"
-    ]
-  },
+  "version": "20200719.0.0",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "repository": {
     "type": "git",
@@ -18,11 +9,13 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "del": "5.1.0",
-    "google-closure-compiler-java": "20200719.0.0",
     "kleur": "4.0.2",
     "lerna": "^3.22.1",
     "mocha": "^6.x",
     "semver": "^7.x"
+  },
+  "dependencies": {
+    "google-closure-compiler-java": "20200719.0.0"
   },
   "scripts": {
     "build": "node ./tasks/build.js",

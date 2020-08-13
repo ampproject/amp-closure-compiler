@@ -16,14 +16,19 @@
  */
 "use strict";
 
-const { execOrDie } = require('./exec.js');
-const { getOsName } = require('./utils.js');
-
 /**
- * Run the test commands and fail the script if any of them failed
- **/
-(async function () {
-  execOrDie('mocha');
-  execOrDie('cd packages/google-closure-compiler && yarn && mocha');
-  execOrDie(`node ./packages/google-closure-compiler-${getOsName()}/test.js`);
-})();
+ * Mapping from process.platform to the OS name / directory.
+ */
+const platformOsMap = {
+  linux: 'linux',
+  darwin: 'osx',
+  win32: 'windows',
+}
+
+function getOsName() {
+  return platformOsMap[process.platform];
+}
+
+module.exports = {
+  getOsName,
+}
