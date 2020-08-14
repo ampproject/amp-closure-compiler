@@ -20,7 +20,6 @@
   "scripts": {
     "build": "node ./tasks/build.js",
     "test": "node ./tasks/test.js",
-    "restrict": "node ./tasks/restrict.js",
     "clean": "node ./tasks/clean.js"
   }
 }

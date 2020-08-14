@@ -22,9 +22,7 @@
     "x86"
   ],
   "preferUnplugged": true,
-  "scripts": {
-    "build": "node ./build-image.js",
-    "test": "node ./test.js",
-    "restrict": "node ./add-os-restrictions.js"
-  }
+  "os": [
+    "win32"
+  ]
 }
