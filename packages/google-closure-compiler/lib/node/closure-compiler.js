@@ -24,7 +24,7 @@
 'use strict';
 
 const spawn = require('child_process').spawn;
-const compilerPath = require('@ampproject/google-closure-compiler-java');
+const compilerPath = require('../../../google-closure-compiler-java');
 const path = require('path');
 const contribPath = path.resolve(__dirname, '../../contrib');
 

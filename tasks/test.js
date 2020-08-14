@@ -16,12 +16,79 @@
  */
 "use strict";
 
-const { execOrDie } = require("./exec.js");
+const fs = require('fs');
+const path = require('path');
+const kleur = require('kleur');
+const { execOrDie } = require('./exec.js');
+const { getOsName } = require('./utils.js');
+const { spawn } = require('child_process');
+
+function runJavaTest() {
+  const javaPath = require('../packages/google-closure-compiler-java/');
+  if (fs.existsSync(javaPath)) {
+    process.stdout.write(`  ${kleur.green('✓')} ${kleur.dim('compiler jar exists')}\n`);
+  } else {
+    process.stdout.write(`  ${kleur.red('compiler jar does not exist')}\n`);
+    process.exitCode = 1;
+  }
+}
+
+function runNativeTest() {
+  const nativeImagePath = require(`../packages/google-closure-compiler-${getOsName()}/`);
+  if (fs.existsSync(nativeImagePath)) {
+    process.stdout.write(`  ${kleur.green('✓')} ${kleur.dim('compiler binary exists')}\n`);
+    new Promise(
+        (resolve, reject) => {
+          const compilerTest = spawn(
+            nativeImagePath,
+              ['--version'],
+              {stdio: 'inherit'});
+          compilerTest.on('error', err => {
+            reject(err);
+          });
+          compilerTest.on('close', exitCode => {
+            if (exitCode != 0) {
+              return reject('non zero exit code');
+            }
+            process.stdout.write(
+                `  ${kleur.green('✓')} ${kleur.dim('compiler version successfully reported')}\n`);
+            resolve();
+          });
+        })
+        .then(() => new Promise((resolve, reject) => {
+          const compilerTest = spawn(
+            nativeImagePath,
+              ['--help'],
+              {stdio: 'inherit'});
+          compilerTest.on('error', err => {
+            reject(err);
+          });
+          compilerTest.on('close', exitCode => {
+            if (exitCode != 0) {
+              return reject('non zero exit code');
+            }
+            process.stdout.write(
+                `  ${kleur.green('✓')} ${kleur.dim('compiler help successfully reported')}\n`);
+            resolve();
+          });
+        }))
+        .catch(err => {
+          process.stderr.write((err || '').toString() + '\n');
+          process.stdout.write(`  ${kleur.red('compiler execution tests failed')}\n`);
+          process.exitCode = 1;
+        });
+  } else {
+    process.stdout.write(`  ${kleur.red('compiler binary does not exist')}\n`);
+    process.exitCode = 1;
+  }
+}
 
 /**
  * Run the test commands and fail the script if any of them failed
  **/
 (async function () {
-  execOrDie('yarn workspaces run test');
   execOrDie('mocha');
+  execOrDie('cd packages/google-closure-compiler && yarn && mocha');
+  runJavaTest();
+  runNativeTest();
 })();

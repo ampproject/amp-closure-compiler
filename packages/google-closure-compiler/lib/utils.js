@@ -18,20 +18,20 @@
 function getNativeImagePath() {
   if (process.platform === 'darwin') {
     try {
-      return require('@ampproject/google-closure-compiler-osx');
+      return require('../../google-closure-compiler-osx');
     } catch (e) {
       return;
     }
   }
   if (process.platform === 'win32') {
     try {
-      return require('@ampproject/google-closure-compiler-windows');
+      return require('../../google-closure-compiler-windows');
     } catch (e) {
       return;
     }
   }
   try {
-    return require('@ampproject/google-closure-compiler-linux');
+    return require('../../google-closure-compiler-linux');
   } catch (e) {
   }
 }

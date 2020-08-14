@@ -1,4 +1,4 @@
-name: Build and Push Native Compiler Binaries
+name: Build, Test, and Push Native Compiler Binaries
 on:
   push:
     branches:
@@ -27,8 +27,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install Dependencies
       run: yarn
-    - name: Remove OS Restrictions
-      run: node ./tasks/remove-os-restrictions.js
     - name: Upgrade Packages to Specified Closure Version
       run: node ./tasks/bump-version.js
     - name: Compile Native Binary

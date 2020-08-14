@@ -16,11 +16,19 @@
  */
 "use strict";
 
-const { exec } = require("./exec.js");
-
 /**
- * Restrict the usage of each optional dependency per OS
- **/
-(async function () {
-  exec('yarn workspaces run restrict');
-})();
+ * Mapping from process.platform to the OS name / directory.
+ */
+const platformOsMap = {
+  linux: 'linux',
+  darwin: 'osx',
+  win32: 'windows',
+}
+
+function getOsName() {
+  return platformOsMap[process.platform];
+}
+
+module.exports = {
+  getOsName,
+}

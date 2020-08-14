@@ -22,12 +22,7 @@
     "x64",
     "x86"
   ],
-  "devDependencies": {
-    "kleur": "4.0.2"
-  },
-  "scripts": {
-    "build": "node ./build-image.js",
-    "test": "node ./test.js",
-    "restrict": "node ./add-os-restrictions.js"
-  }
+  "os": [
+    "darwin"
+  ]
 }

@@ -16,15 +16,10 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "@ampproject/google-closure-compiler-java": "20200719.0.0",
     "kleur": "4.0.2",
     "minimist": "1.x",
     "vinyl": "2.x",
     "vinyl-sourcemaps-apply": "^0.2.0"
-  },
-  "optionalDependencies": {
-    "@ampproject/google-closure-compiler-linux": "20200719.0.0",
-    "@ampproject/google-closure-compiler-osx": "20200719.0.0"
   },
   "devDependencies": {
     "gulp": "4.x",
@@ -40,10 +35,7 @@
     "stream-assert": "^2.0.3"
   },
   "scripts": {
-    "build": "echo \"google-closure-compiler build\"",
-    "test": "mocha",
-    "clean": "echo \"google-closure-compiler clean\"",
-    "restrict": "echo \"google-closure-compiler restrict\""
+    "test": "mocha"
   },
   "engines": {
     "node": ">=8"
