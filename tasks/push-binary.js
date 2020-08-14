@@ -31,8 +31,14 @@ async function main() {
   execOrDie(`git add ${nativeCompilerGlob}`);
   execOrDie(`git commit -m "📦 Updated compiler binary for ${osName}"`);
   execOrDie('git checkout -- .');
-  execOrDie('git pull origin --rebase');
-  execOrDie('git push');
+  if (process.env.GITHUB_EVENT_NAME == 'pull_request') {
+    console.log('Verifying files in last commit...')
+    execOrDie('git diff --stat HEAD^..HEAD');
+  } else if (process.env.GITHUB_EVENT_NAME == 'push') {
+    console.log('Syncing to origin and pushing commit...')
+    execOrDie('git pull origin --rebase');
+    execOrDie('git push');
+  }
 }
 
 main();
