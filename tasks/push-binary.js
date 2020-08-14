@@ -24,7 +24,8 @@ const { getOsName } = require('./utils.js');
  * Push the compiler binary built on this OS after syncing to origin
  **/
 async function main() {
-  const nativeCompilerGlob = path.join('packages', `google-closure-compiler-${getOsName()}`, 'compiler*')
+  const osName = getOsName();
+  const nativeCompilerGlob = path.join('packages', `google-closure-compiler-${osName}`, 'compiler*')
   execOrDie(`git config --global user.name "${process.env.GITHUB_ACTOR}"`);
   execOrDie(`git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`);
   execOrDie(`git add ${nativeCompilerGlob}`);
