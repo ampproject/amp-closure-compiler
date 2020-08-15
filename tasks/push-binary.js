@@ -21,21 +21,28 @@ const { execOrDie } = require('./exec.js');
 const { getOsName } = require('./utils.js');
 
 /**
- * Push the compiler binary built on this OS after syncing to origin
+ * Push the compiler binary built on this OS after syncing to origin. Also push
+ * an updated Java compiler (from just one of the OSs).
  **/
 async function main() {
   const osName = getOsName();
+  const javaCompilerGlob = path.join('packages', 'google-closure-compiler-java', 'compiler*')
   const nativeCompilerGlob = path.join('packages', `google-closure-compiler-${osName}`, 'compiler*')
   execOrDie(`git config --global user.name "${process.env.GITHUB_ACTOR}"`);
   execOrDie(`git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`);
+  // It's sufficient to update the Java compiler just once
+  if (osName == 'linux') {
+    execOrDie(`git add ${javaCompilerGlob}`);
+    execOrDie('git commit -m "📦 Updated Java compiler binary"');
+  }
   execOrDie(`git add ${nativeCompilerGlob}`);
   execOrDie(`git commit -m "📦 Updated compiler binary for ${osName}"`);
   execOrDie('git checkout -- .');
   if (process.env.GITHUB_EVENT_NAME == 'pull_request') {
-    console.log('Verifying files in last commit...')
-    execOrDie('git diff --stat HEAD^..HEAD');
+    console.log('Verifying files in new commit(s)...')
+    execOrDie(`git diff --stat ${process.env.GITHUB_SHA}..HEAD`);
   } else if (process.env.GITHUB_EVENT_NAME == 'push') {
-    console.log('Syncing to origin and pushing commit...')
+    console.log('Syncing to origin and pushing commit(s)...')
     execOrDie('git pull origin --rebase');
     execOrDie('git push');
   }
