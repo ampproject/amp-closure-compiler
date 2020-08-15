@@ -20,6 +20,7 @@
 const fs = require("fs");
 const path = require("path");
 const { execOrDie } = require("./exec.js");
+const { getOsName } = require('./utils.js');
 
 const graalOsMap = {
   linux: 'linux',
@@ -107,8 +108,9 @@ process.on("unhandledRejection", (error) => {
         console.log(`Extracting ${GRAAL_ARCHIVE_FILE}`);
         if (GRAAL_PACKAGE_SUFFIX === "tar.gz") {
           execOrDie(`tar -xzf ${GRAAL_ARCHIVE_FILE}`, {cwd: TEMP_PATH});
+        } else {
+          execOrDie(`7z x -y ${GRAAL_ARCHIVE_FILE}`, {cwd: TEMP_PATH});
         }
-        execOrDie(`7z x -y ${GRAAL_ARCHIVE_FILE}`, { cwd: TEMP_PATH });
       })
       .then(() => {
         console.log(`Installing native image from ${GRAAL_GU_PATH}`);
@@ -122,19 +124,21 @@ process.on("unhandledRejection", (error) => {
     `native-image${GRAAL_OS === "windows" ? ".cmd" : ""}`
   );
 
+  const packageDir = path.join('packages', `google-closure-compiler-${getOsName()}`);
+
   return buildSteps
     .then(() => {
       console.log(`Testing native image:`);
-      fs.writeFileSync('Foo.java', 'public class Foo { public static void main(String[] args){ System.out.println("Hello amp-closure-compiler!"); } }\n');
-      execOrDie(GRAAL_OS === "windows" ? 'type Foo.java' : 'cat Foo.java')
-      execOrDie('javac -version');
-      execOrDie('javac Foo.java');
-      execOrDie(`${GRAAL_NATIVE_IMAGE_PATH} Foo`);
-      execOrDie(GRAAL_OS === "windows" ? 'dir' : 'ls -la')
-      execOrDie(GRAAL_OS === "windows" ? 'foo.exe' : './foo')
+      fs.writeFileSync(path.join(packageDir, 'Foo.java'), 'public class Foo { public static void main(String[] args){ System.out.println("Hello amp-closure-compiler!"); } }\n');
+      execOrDie(GRAAL_OS === "windows" ? 'type Foo.java' : 'cat Foo.java', {cwd: packageDir})
+      execOrDie('javac -version', {cwd: packageDir});
+      execOrDie('javac Foo.java', {cwd: packageDir});
+      execOrDie(`cd ${packageDir} && ${GRAAL_NATIVE_IMAGE_PATH} Foo`);
+      execOrDie(`${GRAAL_OS === "windows" ? 'dir' : 'ls -la'} ${packageDir}`);
+      execOrDie(path.join(packageDir, GRAAL_OS === "windows" ? 'foo.exe' : 'foo'));
     })
     .then(() => {
       console.log(`Building native image: ${GRAAL_NATIVE_IMAGE_PATH} ${NATIVE_IMAGE_BUILD_ARGS}`);
-      execOrDie(`${GRAAL_NATIVE_IMAGE_PATH} ${NATIVE_IMAGE_BUILD_ARGS}`, {'stdio': 'inherit'});
+      execOrDie(`cd ${packageDir} && ${GRAAL_NATIVE_IMAGE_PATH} ${NATIVE_IMAGE_BUILD_ARGS}`);
     });
 })();

@@ -42,5 +42,4 @@ jobs:
     - name: Test Changes
       run: yarn test
     - name: Push Native Binary for ${{ matrix.platform }}
-      if: ${{ github.event_name == 'push' }}
       run: node ./tasks/push-binary.js
