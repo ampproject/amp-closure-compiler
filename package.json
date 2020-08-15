@@ -10,7 +10,6 @@
   "devDependencies": {
     "del": "5.1.0",
     "kleur": "4.0.2",
-    "lerna": "^3.22.1",
     "mocha": "^6.x",
     "semver": "^7.x"
   },
