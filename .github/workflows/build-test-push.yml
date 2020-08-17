@@ -16,8 +16,6 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
-      with:
-        lfs: true
     - name: Set up Windows Dev Environment (skipped on Linux and macOS)
       uses: seanmiddleditch/gha-setup-vsdevenv@master
       if: ${{ matrix.platform == 'windows-latest' }}
