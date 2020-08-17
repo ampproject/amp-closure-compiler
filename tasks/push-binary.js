@@ -26,17 +26,17 @@ const { getOsName } = require('./utils.js');
  **/
 async function main() {
   const osName = getOsName();
-  const javaCompilerGlob = path.join('packages', 'google-closure-compiler-java', 'compiler*')
-  const nativeCompilerGlob = path.join('packages', `google-closure-compiler-${osName}`, 'compiler*')
+  const javaCompiler = path.join('packages', 'google-closure-compiler-java', 'compiler.jar')
+  const nativeCompiler = path.join('packages', `google-closure-compiler-${osName}`, osName == 'windows' ? 'compiler.exe' : 'compiler')
   execOrDie(`git config --global user.name "${process.env.GITHUB_ACTOR}"`);
   execOrDie(`git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`);
   // It's sufficient to update the Java compiler just once
   if (osName == 'linux') {
-    execOrDie(`git add ${javaCompilerGlob}`);
-    execOrDie('git commit -m "📦 Updated Java compiler binary"');
+    execOrDie(`git add ${javaCompiler}`);
+    execOrDie('git commit -m "📦 Updated java compiler binary"');
   }
-  execOrDie(`git add ${nativeCompilerGlob}`);
-  execOrDie(`git commit -m "📦 Updated compiler binary for ${osName}"`);
+  execOrDie(`git add ${nativeCompiler}`);
+  execOrDie(`git commit -m "📦 Updated ${osName} compiler binary"`);
   execOrDie('git checkout -- .');
   if (process.env.GITHUB_EVENT_NAME == 'pull_request') {
     console.log('Verifying files in new commit(s)...')
