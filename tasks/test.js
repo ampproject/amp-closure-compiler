@@ -88,7 +88,7 @@ function runNativeTest() {
  **/
 (async function () {
   execOrDie('mocha');
-  execOrDie('cd packages/google-closure-compiler && yarn && mocha');
+  execOrDie('cd packages/google-closure-compiler && mocha');
   runJavaTest();
   runNativeTest();
 })();
