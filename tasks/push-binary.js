@@ -17,7 +17,7 @@
 "use strict";
 
 const path = require('path');
-const { execOrDie } = require('./exec.js');
+const { exec, execOrDie } = require('./exec.js');
 const { getOsName } = require('./utils.js');
 
 /**
@@ -44,8 +44,21 @@ async function main() {
     execOrDie(`git diff --stat ${process.env.GITHUB_SHA}..HEAD`);
   } else if (process.env.GITHUB_EVENT_NAME == 'push') {
     console.log('Syncing to origin and pushing commit(s)...')
-    execOrDie('git pull origin --rebase');
-    execOrDie('git push');
+    let retries = 3;
+    const delaySec = 10;
+    const pushCommits = () => {
+      if (retries == 0) {
+        console.log('Could not push commit(s) to origin.');
+        process.exitCode = 1;
+        return;
+      };
+      if (exec('git pull origin --rebase && git push').status != 0) {
+        --retries;
+        console.log(`Push failed. Retrying in ${delaySec} seconds...`)
+        setTimeout(pushCommits, delaySec * 1000);
+      }
+    }
+    pushCommits();
   }
 }
 

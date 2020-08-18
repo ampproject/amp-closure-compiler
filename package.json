@@ -9,12 +9,23 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "del": "5.1.0",
-    "kleur": "4.0.2",
-    "mocha": "^6.x",
-    "semver": "^7.x"
+    "gulp": "4.0.2",
+    "gulp-filter": "6.0.0",
+    "gulp-mocha": "7.0.2",
+    "gulp-sourcemaps": "2.6.5",
+    "kleur": "4.1.0",
+    "lodash": "4.17.20",
+    "minimist": "1.2.5",
+    "mocha": "8.1.1",
+    "ncp": "2.0.0",
+    "semver": "7.3.2",
+    "should": "13.2.3",
+    "stream-assert": "2.0.3",
+    "vinyl": "2.2.0",
+    "vinyl-sourcemaps-apply": "0.2.1"
   },
   "dependencies": {
-    "google-closure-compiler-java": "20200719.0.0"
+    "google-closure-compiler-java": "20200517.0.0"
   },
   "scripts": {
     "build": "node ./tasks/build.js",

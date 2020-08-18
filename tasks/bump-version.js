@@ -19,19 +19,14 @@
 const pkg = require("../package.json");
 const semverMajor = require("semver/functions/major");
 const fs = require("fs");
-const { platform } = require('os');
-
-const isLinux = platform() === 'linux';
-const isOSX = platform() === 'darwin';
-const isWindows = platform() === 'win32';
 
 const PACKAGE_LOCATIONS = [
   "./packages/google-closure-compiler/package.json",
   "./packages/google-closure-compiler-java/package.json",
-  isLinux ? "./packages/google-closure-compiler-linux/package.json" : null,
-  isOSX ? "./packages/google-closure-compiler-osx/package.json" : null,
-  isWindows ? "./packages/google-closure-compiler-windows/package.json" : null,
-].filter(Boolean);
+  "./packages/google-closure-compiler-linux/package.json",
+  "./packages/google-closure-compiler-osx/package.json",
+  "./packages/google-closure-compiler-windows/package.json",
+];
 
 // This script should catch and handle all rejected promises.
 // If it ever fails to do so, report that and exit immediately.
