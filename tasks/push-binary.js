@@ -37,6 +37,7 @@ async function main() {
   }
   execOrDie(`git add ${nativeCompiler}`);
   execOrDie(`git commit -m "📦 Updated ${osName} compiler binary"`);
+  execOrDie('git clean -d  -f .');
   execOrDie('git checkout -- .');
   if (process.env.GITHUB_EVENT_NAME == 'pull_request') {
     console.log('Verifying files in new commit(s)...')
