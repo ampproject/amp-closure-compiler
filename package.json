@@ -14,7 +14,7 @@
     "semver": "^7.x"
   },
   "dependencies": {
-    "google-closure-compiler-java": "20200719.0.0"
+    "google-closure-compiler-java": "20200517.0.0"
   },
   "scripts": {
     "build": "node ./tasks/build.js",
