@@ -1,6 +1,6 @@
 {
   "name": "@ampproject/amp-closure-compiler",
-  "version": "20200719.0.0",
+  "version": "1.0.0",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "repository": {
     "type": "git",
