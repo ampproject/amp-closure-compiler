@@ -1,6 +1,6 @@
 {
   "name": "@ampproject/google-closure-compiler-osx",
-  "version": "20200920.0.0",
+  "version": "20200920.1.0",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "main": "index.js",
   "license": "Apache-2.0",
