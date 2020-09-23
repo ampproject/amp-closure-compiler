@@ -7,6 +7,7 @@ on:
     branches:
       - master
 jobs:
+  if: ${{ !startsWith(github.event.head_commit.message, 'v202') && !contains(github.event.head_commit.message, 'skip CI') }}
   build:
     strategy:
       matrix:
