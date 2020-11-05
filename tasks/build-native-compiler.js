@@ -36,7 +36,7 @@ const graalPackageSuffixMap = {
 
 const TEMP_PATH = path.resolve(__dirname, "..", "temp");
 const GRAAL_OS = graalOsMap[process.platform];
-const GRAAL_VERSION = "20.1.0";
+const GRAAL_VERSION = "20.2.0";
 const GRAAL_FOLDER = `graalvm-ce-java11-${GRAAL_OS}-amd64-${GRAAL_VERSION}`;
 const GRAAL_PACKAGE_SUFFIX = graalPackageSuffixMap[process.platform];
 const GRAAL_URL =
