@@ -1,0 +1,20 @@
+{
+  "extends": ["config:base"],
+  "node": {
+    "supportPolicy": ["lts_latest"]
+  },
+  "commitMessagePrefix": "📦",
+  "packageRules": [
+    {
+      "paths": ["package.json"],
+      "depTypeList": ["devDependencies"],
+      "groupName": "Dev Dependencies"
+    },
+    {
+      "paths": ["package.json"],
+      "packagePatterns": ["^google-closure-compiler-java$"],
+      "depTypeList": ["dependencies"],
+      "groupName": "Closure Compiler"
+    }
+  ]
+}
