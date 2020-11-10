@@ -3,7 +3,7 @@
     "packages/*"
   ],
   "npmClient": "yarn",
-  "version": "20201006.0.0",
+  "version": "20201102.0.1",
   "ignoreChanges": [
     "**/compiler/**"
   ]
