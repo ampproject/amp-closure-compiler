@@ -16,9 +16,12 @@
  */
 "use strict";
 
+const path = require('path');
 const pkg = require("../package.json");
 const semverMajor = require("semver/functions/major");
 const fs = require("fs");
+const { exec, execOrDie, getStdout } = require('./exec.js');
+const { pushPendingCommits, pushPendingTags } = require('./utils.js');
 
 const PACKAGE_LOCATIONS = [
   "./packages/google-closure-compiler/package.json",
@@ -61,9 +64,6 @@ async function updatePackage(location, closureVersion, additionalModificationMet
   const closureVersion = `${semverMajor(
     pkg.dependencies["google-closure-compiler-java"]
   )}.0.0`;
-
-  // 2. Update Lerna configuration with the valid Closure Version
-  await updatePackage("./lerna.json", closureVersion, (parsed) => parsed);
 
   // 2. Update Major version within each package.
   for await (const packageLocation of PACKAGE_LOCATIONS) {
@@ -110,4 +110,28 @@ async function updatePackage(location, closureVersion, additionalModificationMet
       return parsed;
     });
   }
+
+  // 3. Exit early if no versions were updated.
+  const platformSuffixes = ['-java', '-linux', '-osx', '-windows', '' /* native */];
+  const packageJsonFiles = [];
+  platformSuffixes.forEach(platformSuffix => {
+    packageJsonFiles.push(path.join('packages', `google-closure-compiler${platformSuffix}`, 'package.json'))
+  });
+  const filesChanged = getStdout(
+      `git diff --stat --name-only ${packageJsonFiles.join (' ')}`).trim();
+  if (filesChanged.length == 0) {
+    console.log('All versions are up to date.');
+    return;
+  }
+
+  // 4. Create a commit and tag for the new version
+  execOrDie(`git config --global user.name "${process.env.GITHUB_ACTOR}"`);
+  execOrDie(`git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`);
+  execOrDie(`git add ${packageJsonFiles.join (' ')}`);
+  execOrDie(`git commit -m "v${closureVersion}"`);
+  execOrDie('git clean -d  -f .');
+  execOrDie('git checkout -- .');
+  pushPendingCommits();
+  execOrDie(`git tag "v${closureVersion}"`);
+  pushPendingTags();
 })();

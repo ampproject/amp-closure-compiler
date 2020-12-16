@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  build:
+  build-test-push:
     if: ${{ !startsWith(github.event.head_commit.message, 'v202') && !contains(github.event.head_commit.message, 'skip CI') }}
     strategy:
       matrix:
@@ -26,8 +26,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install Dependencies
       run: yarn
-    - name: Upgrade Packages to Specified Closure Version
-      run: node ./tasks/bump-version.js
     - name: Compile Native Binary
       run: yarn build
     - name: Link Native Binary
@@ -42,3 +40,17 @@ jobs:
       run: yarn test
     - name: Push Native Binary for ${{ matrix.platform }}
       run: node ./tasks/push-binary.js
+  update-versions:
+    needs: build-test-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: yarn
+      - name: Update Package Versions
+        run: node ./tasks/update-versions.js

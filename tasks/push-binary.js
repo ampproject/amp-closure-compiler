@@ -18,7 +18,7 @@
 
 const path = require('path');
 const { exec, execOrDie } = require('./exec.js');
-const { getOsName } = require('./utils.js');
+const { getOsName, pushPendingCommits } = require('./utils.js');
 
 /**
  * Push the compiler binary built on this OS after syncing to origin. Also push
@@ -39,27 +39,7 @@ async function main() {
   execOrDie(`git commit -m "📦 Updated ${osName} compiler binary"`);
   execOrDie('git clean -d  -f .');
   execOrDie('git checkout -- .');
-  if (process.env.GITHUB_EVENT_NAME == 'pull_request') {
-    console.log('Verifying files in new commit(s)...')
-    execOrDie(`git diff --stat ${process.env.GITHUB_SHA}..HEAD`);
-  } else if (process.env.GITHUB_EVENT_NAME == 'push') {
-    console.log('Syncing to origin and pushing commit(s)...')
-    let retries = 3;
-    const delaySec = 10;
-    const pushCommits = () => {
-      if (retries == 0) {
-        console.log('Could not push commit(s) to origin.');
-        process.exitCode = 1;
-        return;
-      };
-      if (exec('git pull origin --rebase && git push').status != 0) {
-        --retries;
-        console.log(`Push failed. Retrying in ${delaySec} seconds...`)
-        setTimeout(pushCommits, delaySec * 1000);
-      }
-    }
-    pushCommits();
-  }
+  pushPendingCommits();
 }
 
 main();
