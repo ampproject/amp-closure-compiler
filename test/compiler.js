@@ -27,7 +27,7 @@ const assert = require("assert");
 const {
   compiler: Compiler,
 } = require("../packages/google-closure-compiler");
-const packageInfo = require("../lerna.json");
+const packageInfo = require("../package.json");
 const Semver = require("semver");
 const compilerVersionMatch = require("./version-match.js");
 const spawn = require("child_process").spawnSync;
@@ -63,7 +63,8 @@ describe("compiler.jar", function () {
 
       assert.notEqual(Semver.valid(versionInfo[1] + ".0.0"), null);
       assert.strictEqual(
-        Semver.major(versionInfo[1] + ".0.0"), Semver.major(packageInfo.version)
+        Semver.major(versionInfo[1] + ".0.0"),
+        Semver.major(packageInfo.dependencies["google-closure-compiler-java"])
       );
       done();
     });
@@ -73,7 +74,7 @@ describe("compiler.jar", function () {
 describe("compiler submodule", function () {
   this.timeout(10000);
   this.slow(5000);
-  
+
   // TODO (KB): Restore this test it's failing on the get tag spawn.
   it.skip("should be synced to the tagged commit", function () {
     const gitCmd = spawn("git", ["tag", "--points-at", "HEAD"], {
@@ -81,7 +82,8 @@ describe("compiler submodule", function () {
     });
     assert.equal(gitCmd.status, 0);
     const currentTag = gitCmd.stdout.toString().replace(/\s/g, "");
-    const mvnVersion = "v" + Semver.major(packageInfo.version);
+    const mvnVersion = "v" +
+      Semver.major(packageInfo.dependencies["google-closure-compiler-java"]);
     let normalizedTag = currentTag;
     if (normalizedTag) {
       normalizedTag = currentTag.replace(/^([-a-z]+-)?(v\d{8})(.*)$/, "$2");
