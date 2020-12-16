@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-"use strict";
+'use strict';
 
-const { exec } = require("./exec.js");
-const { getOsName } = require('./utils.js');
+const {exec} = require('./exec.js');
+const {getOsName} = require('./utils.js');
 
 /**
  * Link native binary for the current OS
  **/
 (async function () {
   exec(`npm link --prefix packages/google-closure-compiler-${getOsName()}`);
-  exec(`npm link "@ampproject/google-closure-compiler-${getOsName()}" --prefix packages/google-closure-compiler`);
+  exec(
+    `npm link "@ampproject/google-closure-compiler-${getOsName()}" --prefix packages/google-closure-compiler`
+  );
 })();
-
-

@@ -14,10 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-"use strict";
+'use strict';
 
 const del = require('del');
-const { exec } = require("./exec.js");
+const {exec} = require('./exec.js');
 
 /**
  * Remove all build artifacts and OS restrictions
@@ -34,8 +34,6 @@ const { exec } = require("./exec.js");
     './packages/google-closure-compiler-windows/compiler.jar',
     './packages/google-closure-compiler-windows/compiler',
   ];
-  await del(pathsToDelete)
+  await del(pathsToDelete);
   exec('node ./tasks/remove-os-restrictions.js');
 })();
-
-

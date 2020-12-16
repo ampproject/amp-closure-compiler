@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-"use strict";
+'use strict';
 
 const path = require('path');
-const { exec, execOrDie } = require('./exec.js');
-const { getOsName, pushPendingCommits } = require('./utils.js');
+const {exec, execOrDie} = require('./exec.js');
+const {getOsName, pushPendingCommits} = require('./utils.js');
 
 /**
  * Push the compiler binary built on this OS after syncing to origin. Also push
@@ -26,10 +26,20 @@ const { getOsName, pushPendingCommits } = require('./utils.js');
  **/
 async function main() {
   const osName = getOsName();
-  const javaCompiler = path.join('packages', 'google-closure-compiler-java', 'compiler.jar')
-  const nativeCompiler = path.join('packages', `google-closure-compiler-${osName}`, osName == 'windows' ? 'compiler.exe' : 'compiler')
+  const javaCompiler = path.join(
+    'packages',
+    'google-closure-compiler-java',
+    'compiler.jar'
+  );
+  const nativeCompiler = path.join(
+    'packages',
+    `google-closure-compiler-${osName}`,
+    osName == 'windows' ? 'compiler.exe' : 'compiler'
+  );
   execOrDie(`git config --global user.name "${process.env.GITHUB_ACTOR}"`);
-  execOrDie(`git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`);
+  execOrDie(
+    `git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`
+  );
   // It's sufficient to update the Java compiler just once
   if (osName == 'linux') {
     execOrDie(`git add ${javaCompiler}`);

@@ -14,26 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-"use strict";
+'use strict';
 
 const path = require('path');
-const pkg = require("../package.json");
-const semverMajor = require("semver/functions/major");
-const fs = require("fs");
-const { exec, execOrDie, getStdout } = require('./exec.js');
-const { pushPendingCommits, pushPendingTags } = require('./utils.js');
+const pkg = require('../package.json');
+const semverMajor = require('semver/functions/major');
+const fs = require('fs');
+const {exec, execOrDie, getStdout} = require('./exec.js');
+const {pushPendingCommits, pushPendingTags} = require('./utils.js');
 
 const PACKAGE_LOCATIONS = [
-  "./packages/google-closure-compiler/package.json",
-  "./packages/google-closure-compiler-java/package.json",
-  "./packages/google-closure-compiler-linux/package.json",
-  "./packages/google-closure-compiler-osx/package.json",
-  "./packages/google-closure-compiler-windows/package.json",
+  './packages/google-closure-compiler/package.json',
+  './packages/google-closure-compiler-java/package.json',
+  './packages/google-closure-compiler-linux/package.json',
+  './packages/google-closure-compiler-osx/package.json',
+  './packages/google-closure-compiler-windows/package.json',
 ];
 
 // This script should catch and handle all rejected promises.
 // If it ever fails to do so, report that and exit immediately.
-process.on("unhandledRejection", (error) => {
+process.on('unhandledRejection', (error) => {
   console.error(error);
   process.exit(1);
 });
@@ -45,8 +45,12 @@ process.on("unhandledRejection", (error) => {
  * @param {(parsed: JSON) => JSON} additionalModificationMethod
  * @return {Promise<void>}
  */
-async function updatePackage(location, closureVersion, additionalModificationMethod) {
-  const packageContents = await fs.promises.readFile(location, "utf8");
+async function updatePackage(
+  location,
+  closureVersion,
+  additionalModificationMethod
+) {
+  const packageContents = await fs.promises.readFile(location, 'utf8');
   let parsed = JSON.parse(packageContents);
   if (semverMajor(parsed.version) !== semverMajor(closureVersion)) {
     parsed.version = closureVersion;
@@ -54,7 +58,7 @@ async function updatePackage(location, closureVersion, additionalModificationMet
     await fs.promises.writeFile(
       location,
       JSON.stringify(parsed, null, 2) + '\n',
-      "utf8"
+      'utf8'
     );
   }
 }
@@ -62,7 +66,7 @@ async function updatePackage(location, closureVersion, additionalModificationMet
 (async function () {
   // 1. Retrieve Closure Version from NPM version published.
   const closureVersion = `${semverMajor(
-    pkg.dependencies["google-closure-compiler-java"]
+    pkg.dependencies['google-closure-compiler-java']
   )}.0.0`;
 
   // 2. Update Major version within each package.
@@ -71,38 +75,36 @@ async function updatePackage(location, closureVersion, additionalModificationMet
       // Ensure the linked dependencies are also using the current released `closure-compiler`.
       if (
         parsed.dependencies &&
-        parsed.dependencies["@ampproject/google-closure-compiler-java"]
+        parsed.dependencies['@ampproject/google-closure-compiler-java']
       ) {
         parsed.dependencies[
-          "@ampproject/google-closure-compiler-java"
+          '@ampproject/google-closure-compiler-java'
         ] = closureVersion;
       }
       if (parsed.optionalDependencies) {
         if (
           parsed.optionalDependencies[
-            "@ampproject/google-closure-compiler-linux"
+            '@ampproject/google-closure-compiler-linux'
           ]
         ) {
           parsed.optionalDependencies[
-            "@ampproject/google-closure-compiler-linux"
+            '@ampproject/google-closure-compiler-linux'
+          ] = closureVersion;
+        }
+        if (
+          parsed.optionalDependencies['@ampproject/google-closure-compiler-osx']
+        ) {
+          parsed.optionalDependencies[
+            '@ampproject/google-closure-compiler-osx'
           ] = closureVersion;
         }
         if (
           parsed.optionalDependencies[
-            "@ampproject/google-closure-compiler-osx"
+            '@ampproject/google-closure-compiler-windows'
           ]
         ) {
           parsed.optionalDependencies[
-            "@ampproject/google-closure-compiler-osx"
-          ] = closureVersion;
-        }
-        if (
-          parsed.optionalDependencies[
-            "@ampproject/google-closure-compiler-windows"
-          ]
-        ) {
-          parsed.optionalDependencies[
-            "@ampproject/google-closure-compiler-windows"
+            '@ampproject/google-closure-compiler-windows'
           ] = closureVersion;
         }
       }
@@ -112,13 +114,26 @@ async function updatePackage(location, closureVersion, additionalModificationMet
   }
 
   // 3. Exit early if no versions were updated.
-  const platformSuffixes = ['-java', '-linux', '-osx', '-windows', '' /* native */];
+  const platformSuffixes = [
+    '-java',
+    '-linux',
+    '-osx',
+    '-windows',
+    '' /* native */,
+  ];
   const packageJsonFiles = [];
-  platformSuffixes.forEach(platformSuffix => {
-    packageJsonFiles.push(path.join('packages', `google-closure-compiler${platformSuffix}`, 'package.json'))
+  platformSuffixes.forEach((platformSuffix) => {
+    packageJsonFiles.push(
+      path.join(
+        'packages',
+        `google-closure-compiler${platformSuffix}`,
+        'package.json'
+      )
+    );
   });
   const filesChanged = getStdout(
-      `git diff --stat --name-only ${packageJsonFiles.join (' ')}`).trim();
+    `git diff --stat --name-only ${packageJsonFiles.join(' ')}`
+  ).trim();
   if (filesChanged.length == 0) {
     console.log('All versions are up to date.');
     return;
@@ -126,8 +141,10 @@ async function updatePackage(location, closureVersion, additionalModificationMet
 
   // 4. Create a commit and tag for the new version
   execOrDie(`git config --global user.name "${process.env.GITHUB_ACTOR}"`);
-  execOrDie(`git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`);
-  execOrDie(`git add ${packageJsonFiles.join (' ')}`);
+  execOrDie(
+    `git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`
+  );
+  execOrDie(`git add ${packageJsonFiles.join(' ')}`);
   execOrDie(`git commit -m "v${closureVersion}"`);
   execOrDie('git clean -d  -f .');
   execOrDie('git checkout -- .');

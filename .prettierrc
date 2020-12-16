@@ -17,9 +17,7 @@
       "options": {"parser": "json"}
     },
     {
-      "files": [
-        ".github/workflows/build-test-push.yml"
-      ],
+      "files": [".github/workflows/build-test-push.yml"],
       "options": {"parser": "yaml"}
     }
   ]

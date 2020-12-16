@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-"use strict";
+'use strict';
 
-const kleur = require("kleur");
-const { promises: fs } = require("fs");
-const { platform } = require('os');
-const { getOsName } = require('./utils.js');
-const { getOutput } = require('./exec.js');
+const kleur = require('kleur');
+const {promises: fs} = require('fs');
+const {platform} = require('os');
+const {getOsName} = require('./utils.js');
+const {getOutput} = require('./exec.js');
 
 /**
  * Copy the newly built compiler and the contrib folder to the applicable packages.
@@ -28,11 +28,11 @@ const { getOutput } = require('./exec.js');
  * @return {!Promise<undefined>}
  */
 function copyCompilerBinaries() {
-  const compiledJavaBinaryPath = "./dist/compiler.jar";
+  const compiledJavaBinaryPath = './dist/compiler.jar';
   return Promise.all([
     fs.copyFile(
       compiledJavaBinaryPath,
-      "./packages/google-closure-compiler-java/compiler.jar"
+      './packages/google-closure-compiler-java/compiler.jar'
     ),
     fs.copyFile(
       compiledJavaBinaryPath,
@@ -48,31 +48,34 @@ function copyCompilerBinaries() {
 (async function () {
   const compiledJarDir = 'dist';
   const buildFile = 'tasks/build.xml';
-  const antExecutable = getOsName() == 'windows' ? 'third_party\\ant\\bin\\ant.bat' : './third_party/ant/bin/ant';
+  const antExecutable =
+    getOsName() == 'windows'
+      ? 'third_party\\ant\\bin\\ant.bat'
+      : './third_party/ant/bin/ant';
   const generateCmd = `${antExecutable} -buildfile ${buildFile} -Ddist.dir ${compiledJarDir} jar`;
   console.log(
-    kleur.green("INFO: ") +
-      "Generating custom closure compiler by running " +
+    kleur.green('INFO: ') +
+      'Generating custom closure compiler by running ' +
       kleur.cyan(generateCmd)
   );
   const result = getOutput(generateCmd, {stdio: 'inherit'});
   if (0 !== result.status) {
     console.log(
-      kleur.red("ERROR: ") +
-        "Could not generate custom closure compiler " +
+      kleur.red('ERROR: ') +
+        'Could not generate custom closure compiler ' +
         kleur.cyan(`${compiledJarDir}/compiler.jar`)
     );
     console.error(kleur.red(result.stdout), kleur.red(result.stderr));
     process.exit(1);
   }
   console.log(
-    kleur.green("SUCCESS: ") +
-      "Generated custom closure compiler " +
+    kleur.green('SUCCESS: ') +
+      'Generated custom closure compiler ' +
       kleur.cyan(`${compiledJarDir}/compiler.jar`)
   );
 
   await copyCompilerBinaries();
   console.log(
-    kleur.green("SUCCESS: ") + "Copied custom closure compiler to packages"
+    kleur.green('SUCCESS: ') + 'Copied custom closure compiler to packages'
   );
 })();

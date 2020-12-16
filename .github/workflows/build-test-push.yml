@@ -15,25 +15,25 @@ jobs:
         node-version: [12.x]
     runs-on: ${{ matrix.platform }}
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v2
-    - name: Set up Windows Dev Environment (skipped on Linux and macOS)
-      uses: seanmiddleditch/gha-setup-vsdevenv@master
-      if: ${{ matrix.platform == 'windows-latest' }}
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2-beta
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Install Dependencies
-      run: npm ci
-    - name: Compile Native Binary
-      run: npm run build
-    - name: Link Native Binary
-      run: npm run link-native
-    - name: Test Changes
-      run: npm run test
-    - name: Push Native Binary for ${{ matrix.platform }}
-      run: node ./tasks/push-binary.js
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Set up Windows Dev Environment (skipped on Linux and macOS)
+        uses: seanmiddleditch/gha-setup-vsdevenv@master
+        if: ${{ matrix.platform == 'windows-latest' }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: npm ci
+      - name: Compile Native Binary
+        run: npm run build
+      - name: Link Native Binary
+        run: npm run link-native
+      - name: Test Changes
+        run: npm run test
+      - name: Push Native Binary for ${{ matrix.platform }}
+        run: node ./tasks/push-binary.js
   update-versions:
     needs: build-test-push
     runs-on: ubuntu-latest
