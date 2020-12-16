@@ -4,14 +4,15 @@
     "supportPolicy": ["lts_latest"]
   },
   "commitMessagePrefix": "📦",
+  "ignorePaths": ["packages/**", "node_modules/**"],
   "packageRules": [
     {
-      "paths": ["package.json"],
+      "paths": ["+(package.json)"],
       "depTypeList": ["devDependencies"],
       "groupName": "Dev Dependencies"
     },
     {
-      "paths": ["package.json"],
+      "paths": ["+(package.json)"],
       "packageNames": ["google-closure-compiler-java"],
       "groupName": "Closure Compiler"
     }
