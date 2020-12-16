@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-"use strict";
+'use strict';
 
-const { execOrDie } = require("./exec.js");
+const {execOrDie} = require('./exec.js');
 
 /**
  * Run the build commands and fail the script if any of them failed

@@ -1,0 +1,18 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.associations": {
+    // Enable JSON auto-formatting for these files.
+    ".prettierrc": "json",
+    ".renovaterc.json": "json",
+    ".vscode/settings.json": "json",
+
+    // Enable YAML auto-formatting for these files.
+    ".github/workflows/build-test-push.yml": "yaml",
+  },
+
+  // Auto-fix files with Prettier using the repo's custom settings.
+  "[javascript]": {"editor.formatOnSave": true},
+  "[yaml]": {"editor.formatOnSave": true},
+  "[json]": {"editor.formatOnSave": true},
+  "[markdown]": {"editor.formatOnSave": true}
+}

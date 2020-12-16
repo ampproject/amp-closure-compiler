@@ -1,77 +1,77 @@
 [
   {
-    "name" : "com.google.javascript.jscomp.CommandLineRunner$Flags",
-    "allDeclaredFields" : true
+    "name": "com.google.javascript.jscomp.CommandLineRunner$Flags",
+    "allDeclaredFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.CommandLineRunner$Flags$BooleanOptionHandler",
-    "allDeclaredConstructors" : true,
+    "name": "com.google.javascript.jscomp.CommandLineRunner$Flags$BooleanOptionHandler",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   },
   {
-    "name" : "com.google.javascript.jscomp.CommandLineRunner$Flags$WarningGuardErrorOptionHandler",
-    "allDeclaredConstructors" : true,
+    "name": "com.google.javascript.jscomp.CommandLineRunner$Flags$WarningGuardErrorOptionHandler",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   },
   {
-    "name" : "com.google.javascript.jscomp.CommandLineRunner$Flags$WarningGuardWarningOptionHandler",
-    "allDeclaredConstructors" : true,
+    "name": "com.google.javascript.jscomp.CommandLineRunner$Flags$WarningGuardWarningOptionHandler",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   },
   {
-    "name" : "com.google.javascript.jscomp.CommandLineRunner$Flags$WarningGuardOffOptionHandler",
-    "allDeclaredConstructors" : true,
+    "name": "com.google.javascript.jscomp.CommandLineRunner$Flags$WarningGuardOffOptionHandler",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   },
   {
-    "name" : "com.google.javascript.jscomp.CommandLineRunner$Flags$JsOptionHandler",
-    "allDeclaredConstructors" : true,
+    "name": "com.google.javascript.jscomp.CommandLineRunner$Flags$JsOptionHandler",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   },
   {
-    "name" : "com.google.javascript.jscomp.CommandLineRunner$Flags$JsZipOptionHandler",
-    "allDeclaredConstructors" : true,
+    "name": "com.google.javascript.jscomp.CommandLineRunner$Flags$JsZipOptionHandler",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   },
   {
-    "name" : "com.google.javascript.jscomp.AbstractCommandLineRunner$JsonFileSpec",
-    "allDeclaredConstructors" : true,
+    "name": "com.google.javascript.jscomp.AbstractCommandLineRunner$JsonFileSpec",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true,
     "allDeclaredFields": true,
-    "fields" : [
-      { "name" : "src", "allowWrite" : true },
-      { "name" : "path", "allowWrite" : true },
-      { "name" : "sourceMap", "allowWrite" : true },
-      { "name" : "webpackId", "allowWrite" : true }
+    "fields": [
+      {"name": "src", "allowWrite": true},
+      {"name": "path", "allowWrite": true},
+      {"name": "sourceMap", "allowWrite": true},
+      {"name": "webpackId", "allowWrite": true}
     ]
   },
   {
-    "name" : "org.kohsuke.args4j.CmdLineParser",
-    "allDeclaredConstructors" : true,
+    "name": "org.kohsuke.args4j.CmdLineParser",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true,
     "allDeclaredFields": true
   },
   {
-    "name" : "org.kohsuke.args4j.Option",
-    "allDeclaredConstructors" : true,
+    "name": "org.kohsuke.args4j.Option",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true,
     "allDeclaredFields": true
   },
   {
-    "name" : "org.kohsuke.args4j.OptionDef",
-    "allDeclaredConstructors" : true,
+    "name": "org.kohsuke.args4j.OptionDef",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true,
     "allDeclaredFields": true
   },
   {
-    "name" : "org.kohsuke.args4j.spi.FieldSetter",
-    "allDeclaredConstructors" : true,
+    "name": "org.kohsuke.args4j.spi.FieldSetter",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true,
     "allDeclaredFields": true
   },
   {
-    "name" : "org.kohsuke.args4j.spi.Setter",
-    "allDeclaredConstructors" : true,
+    "name": "org.kohsuke.args4j.spi.Setter",
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true,
     "allDeclaredFields": true
   },
@@ -190,114 +190,114 @@
     "allDeclaredFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.ConformanceConfig",
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.ConformanceConfig",
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.ConformanceConfig$Builder",
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.ConformanceConfig$Builder",
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.ConformanceRules",
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.ConformanceRules",
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.ConformanceRules$BanCreateDom",
-    "methods" : [ { "name" : "<init>" } ],
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.ConformanceRules$BanCreateDom",
+    "methods": [{"name": "<init>"}],
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.ConformanceRules$BanCreateElement",
-    "methods" : [ { "name" : "<init>" } ],
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.ConformanceRules$BanCreateElement",
+    "methods": [{"name": "<init>"}],
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.ConformanceRules$BanExpose",
-    "methods" : [ { "name" : "<init>" } ],
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.ConformanceRules$BanExpose",
+    "methods": [{"name": "<init>"}],
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.ConformanceRules$BanGlobalVars",
-    "methods" : [ { "name" : "<init>" } ],
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.ConformanceRules$BanGlobalVars",
+    "methods": [{"name": "<init>"}],
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.ConformanceRules$BanThrowOfNonErrorTypes",
-    "methods" : [ { "name" : "<init>" } ],
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.ConformanceRules$BanThrowOfNonErrorTypes",
+    "methods": [{"name": "<init>"}],
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.ConformanceRules$BanUnknownThis",
-    "methods" : [ { "name" : "<init>" } ],
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.ConformanceRules$BanUnknownThis",
+    "methods": [{"name": "<init>"}],
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.Requirement",
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.Requirement",
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.Requirement$Builder",
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.Requirement$Builder",
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.Requirement$WhitelistEntry",
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.Requirement$WhitelistEntry",
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.Requirement$Type",
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.Requirement$Type",
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.Requirement$TypeMatchingStrategy",
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.Requirement$TypeMatchingStrategy",
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   },
   {
-    "name" : "com.google.javascript.jscomp.Requirement$Severity",
-    "allDeclaredMethods" : true,
-    "allDeclaredFields" : true,
-    "allPublicMethods" : true,
-    "allPublicFields" : true
+    "name": "com.google.javascript.jscomp.Requirement$Severity",
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true,
+    "allPublicMethods": true,
+    "allPublicFields": true
   }
 ]
