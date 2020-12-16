@@ -16,7 +16,7 @@
   ],
   "license": "Apache-2.0",
   "dependencies": {
-    "@ampproject/google-closure-compiler-java": "20201207.0.0"
+    "@ampproject/google-closure-compiler-java": "20201102.1.0"
   },
   "optionalDependencies": {
     "@ampproject/google-closure-compiler-linux": "20201207.0.0",
