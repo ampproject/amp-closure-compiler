@@ -8,7 +8,7 @@ git pull
 
 Run tests locally and make sure they pass.
 ```
-yarn test
+npm run test
 ```
 
 Publish a new version for each package. (Use `--dry-run` to preview results without actually publishing.)

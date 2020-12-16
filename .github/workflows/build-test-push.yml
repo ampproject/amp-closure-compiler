@@ -25,13 +25,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install Dependencies
-      run: yarn
+      run: npm ci
     - name: Compile Native Binary
-      run: yarn build
+      run: npm run build
     - name: Link Native Binary
-      run: yarn link-native
+      run: npm run link-native
     - name: Test Changes
-      run: yarn test
+      run: npm run test
     - name: Push Native Binary for ${{ matrix.platform }}
       run: node ./tasks/push-binary.js
   update-versions:
@@ -45,6 +45,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies
-        run: yarn
+        run: npm ci
       - name: Update Package Versions
         run: node ./tasks/update-versions.js

@@ -23,8 +23,8 @@ const { getOsName } = require('./utils.js');
  * Link native binary for the current OS
  **/
 (async function () {
-  exec(`yarn link --cwd packages/google-closure-compiler-${getOsName()}`);
-  exec(`yarn link "@ampproject/google-closure-compiler-${getOsName()}" --cwd packages/google-closure-compiler`);
+  exec(`npm link --prefix packages/google-closure-compiler-${getOsName()}`);
+  exec(`npm link "@ampproject/google-closure-compiler-${getOsName()}" --prefix packages/google-closure-compiler`);
 })();
 
 
