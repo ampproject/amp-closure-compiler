@@ -1,4 +1,4 @@
-name: Build, Test, and Push Native Compiler Binaries
+name: CI
 on:
   push:
     branches:
@@ -8,7 +8,7 @@ on:
       - master
 jobs:
   build-test-push:
-    if: ${{ !startsWith(github.event.head_commit.message, 'v202') && !contains(github.event.head_commit.message, 'skip CI') }}
+    if: ${{ !contains(github.event.head_commit.message, 'skip CI') }}
     strategy:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
@@ -29,13 +29,7 @@ jobs:
     - name: Compile Native Binary
       run: yarn build
     - name: Link Native Binary
-      run: |
-        (yarn link --cwd packages/google-closure-compiler-osx)
-        (yarn link --cwd packages/google-closure-compiler-linux)
-        (yarn link --cwd packages/google-closure-compiler-windows)
-        (yarn link "@ampproject/google-closure-compiler-osx" --cwd packages/google-closure-compiler)
-        (yarn link "@ampproject/google-closure-compiler-linux" --cwd packages/google-closure-compiler)
-        (yarn link "@ampproject/google-closure-compiler-windows" --cwd packages/google-closure-compiler)
+      run: yarn link-native
     - name: Test Changes
       run: yarn test
     - name: Push Native Binary for ${{ matrix.platform }}

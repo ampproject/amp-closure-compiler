@@ -30,6 +30,7 @@
   "scripts": {
     "build": "node ./tasks/build.js",
     "test": "node ./tasks/test.js",
+    "link-native": "node ./tasks/link-native.js",
     "clean": "node ./tasks/clean.js"
   }
 }
