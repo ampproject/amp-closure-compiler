@@ -10,7 +10,7 @@ jobs:
   build-test-push:
     if: |
       github.event_name == 'pull_request' ||
-      (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'v202')) ||
+      (github.event_name == 'push' && contains(github.event.head_commit.message, 'v202')) ||
       (github.event_name == 'push' && contains(github.event.head_commit.message, '[UPDATE]'))
     strategy:
       matrix:
