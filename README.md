@@ -50,7 +50,7 @@ If you're looking to use Closure Compiler for your project, here are some great 
     ```sh
     npm link @ampproject/google-closure-compiler
     npm link google-closure-compiler-java
-    npm link google-closure-compiler-java-osx # may fail if you're not on OSX
-    npm link google-closure-compiler-java-linux # may fail if you're not on Linux
-    npm link google-closure-compiler-java-windows # may fail if you're not on Windows
+    npm link google-closure-compiler-osx # may fail if you're not on OSX
+    npm link google-closure-compiler-linux # may fail if you're not on Linux
+    npm link google-closure-compiler-windows # may fail if you're not on Windows
     ```
