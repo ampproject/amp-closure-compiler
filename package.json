@@ -25,7 +25,7 @@
     "vinyl-sourcemaps-apply": "0.2.1"
   },
   "dependencies": {
-    "google-closure-compiler-java": "20210202.0.0"
+    "google-closure-compiler-java": "20210302.0.0"
   },
   "scripts": {
     "build": "node ./tasks/build.js",
