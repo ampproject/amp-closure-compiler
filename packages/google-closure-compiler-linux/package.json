@@ -1,6 +1,6 @@
 {
   "name": "@ampproject/google-closure-compiler-linux",
-  "version": "20210202.0.0",
+  "version": "20210302.0.0",
   "description": "Forked Closure Compiler Publishing using AMP Command Line Runner",
   "main": "index.js",
   "license": "Apache-2.0",
