@@ -37,11 +37,19 @@ public class AmpCommandLineRunner extends CommandLineRunner {
 
   private boolean pseudo_names = false;
 
+  /**
+   * AMP config and AmpCodingConvention must be specifically enabled by passing AMP_MODE=true
+   */
+  private boolean amp_mode = false;
+
   protected AmpCommandLineRunner(String[] args) {
     super(args);
   }
 
   @Override protected CompilerOptions createOptions() {
+    if (!amp_mode) {
+      return super.createOptions();
+    }
     if (typecheck_only) {
       return createTypeCheckingOptions();
     }
@@ -83,7 +91,9 @@ public class AmpCommandLineRunner extends CommandLineRunner {
     AmpCommandLineRunner runner = new AmpCommandLineRunner(args);
 
     for (String arg : args) {
-      if (arg.contains("TYPECHECK_ONLY=true")) {
+      if (arg.contains("AMP_MODE=true")) {
+        runner.amp_mode = true;
+      } else if (arg.contains("TYPECHECK_ONLY=true")) {
         runner.typecheck_only = true;
       } else if (arg.contains("PSEUDO_NAMES=true")) {
         runner.pseudo_names = true;

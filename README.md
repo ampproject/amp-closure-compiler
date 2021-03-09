@@ -20,18 +20,20 @@ If you're looking to use Closure Compiler for your project, here are some great 
     cd amp-closure-compiler
     npm install # This will create node_modules/google-closure-compiler-java/compiler.jar
     ```
-1. Clone https://github.com/google/closure-compiler/ (`google/closure-compiler`)
-    ```sh
-    git clone git@github.com:google/closure-compiler.git
-    ```
-1. Make your edits to `google/closure-compiler`
-1. [Build](https://github.com/google/closure-compiler/#using-bazel) `google/closure-compiler`
-1. Link your built `google/closure-compiler` to `amp-closure-compiler`'s `compiler.jar`
-    ```sh
-    # Run this from your source root directory
-    ln -s closure-compiler/bazel-bin/compiler_unshaded_deploy.jar \
-    amp-closure-compiler/node_modules/google-closure-compiler-java/compiler.jar
-    ```
+1. Make your edits
+   1. If you want to make changes to Google Closure Compiler itself:
+      1. Clone https://github.com/google/closure-compiler/ (`google/closure-compiler`)
+          ```sh
+          git clone git@github.com:google/closure-compiler.git
+          ```
+      1. Make your edits to `google/closure-compiler`
+      1. [Build](https://github.com/google/closure-compiler/#using-bazel) `google/closure-compiler`
+      1. Link your built `google/closure-compiler` to `amp-closure-compiler`'s `compiler.jar`
+          ```sh
+          # Run this from your source root directory
+          ln -s closure-compiler/bazel-bin/compiler_unshaded_deploy.jar \
+          amp-closure-compiler/node_modules/google-closure-compiler-java/compiler.jar
+          ```
 1. Build `amp-closure-compiler`
     ```sh
     npm run clean
@@ -41,7 +43,7 @@ If you're looking to use Closure Compiler for your project, here are some great 
     ```sh
     for dir in `ls packages/`;
     do;
-      cd dir;
+      cd packages/$dir;
       npm link;
       cd ../..;
     done
