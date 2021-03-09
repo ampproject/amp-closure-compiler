@@ -6,6 +6,12 @@ Sync latest changes from `origin`.
 git pull
 ```
 
+Build the native compiler locally to make sure it works.
+
+```
+npm run build
+```
+
 Run tests locally and make sure they pass.
 
 ```
