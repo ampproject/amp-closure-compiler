@@ -18,17 +18,17 @@
 
 const path = require('path');
 const pkg = require('../package.json');
-const semverMajor = require('semver/functions/major');
-const fs = require('fs');
+const {major, inc} = require('semver');
+const fs = require('fs-extra');
 const {exec, execOrDie, getStdout} = require('./exec.js');
 const {pushPendingCommits, pushPendingTags} = require('./utils.js');
 
-const PACKAGE_LOCATIONS = [
-  './packages/google-closure-compiler/package.json',
-  './packages/google-closure-compiler-java/package.json',
-  './packages/google-closure-compiler-linux/package.json',
-  './packages/google-closure-compiler-osx/package.json',
-  './packages/google-closure-compiler-windows/package.json',
+const MAIN_PACKAGE_FILE = 'packages/google-closure-compiler/package.json';
+const SUB_PACKAGE_FILES = [
+  'packages/google-closure-compiler-java/package.json',
+  'packages/google-closure-compiler-linux/package.json',
+  'packages/google-closure-compiler-osx/package.json',
+  'packages/google-closure-compiler-windows/package.json',
 ];
 
 // This script should catch and handle all rejected promises.
@@ -39,79 +39,71 @@ process.on('unhandledRejection', (error) => {
 });
 
 /**
- * Update a json file with the closure version sepecified, give caller a chance to modify the content too.
- * @param {string} location
- * @param {string} closureVersion
- * @param {(parsed: JSON) => JSON} additionalModificationMethod
- * @return {Promise<void>}
+ * Updates the dependencies and optionalDependencies sections of the given JSON.
+ * Returns the updated contents.
+ * @param {JSON} packageContents
+ * @return {JSON}
  */
-async function updatePackage(
-  location,
-  closureVersion,
-  additionalModificationMethod
-) {
-  const packageContents = await fs.promises.readFile(location, 'utf8');
-  let parsed = JSON.parse(packageContents);
-  if (semverMajor(parsed.version) !== semverMajor(closureVersion)) {
-    parsed.version = closureVersion;
-    parsed = additionalModificationMethod(parsed);
-    await fs.promises.writeFile(
-      location,
-      JSON.stringify(parsed, null, 2) + '\n',
-      'utf8'
-    );
+function updatePackageDepVersions(packageContents) {
+  if (packageContents?.dependencies) {
+    const javaDep = '@ampproject/google-closure-compiler-java';
+    if (packageContents.dependencies[javaDep]) {
+      packageContents.dependencies[javaDep] = packageContents.version;
+    }
   }
+  ['linux', 'osx', 'windows'].forEach((os) => {
+    if (packageContents?.optionalDependencies) {
+      const optionalDep = `@ampproject/google-closure-compiler-${os}`;
+      if (packageContents.optionalDependencies[optionalDep]) {
+        packageContents.optionalDependencies[optionalDep] =
+          packageContents.version;
+      }
+    }
+  });
+  return packageContents;
+}
+
+/**
+ * Update a json file with the closure version sepecified. If the major version
+ * already matches, bump the patch version of the json file. Returns the updated
+ * version.
+ * @param {string} packageFile
+ * @param {string} closureMajorVersion
+ * @return {Promise<string>}
+ */
+async function updatePackageVersions(packageFile, closureMajorVersion) {
+  let packageContents = await fs.readJson(packageFile, 'utf8');
+  if (major(packageContents.version) !== closureMajorVersion) {
+    packageContents.version = `${closureMajorVersion}.0.0`;
+  } else {
+    packageContents.version = inc(packageContents.version, 'patch');
+  }
+  packageContents = updatePackageDepVersions(packageContents);
+  await fs.writeJSON(packageFile, packageContents, {spaces: 2});
+  console.log(
+    'Updated package versions in',
+    packageFile,
+    'to',
+    packageContents.version
+  );
+  return packageContents.version;
 }
 
 (async function () {
-  // 1. Retrieve Closure Version from NPM version published.
-  const closureVersion = `${semverMajor(
-    pkg.dependencies['google-closure-compiler-java']
-  )}.0.0`;
+  // 1. Retrieve the major version of the published Closure NPM package.
+  const closureJavaDep = 'google-closure-compiler-java';
+  const closureMajorVersion = major(pkg.dependencies[closureJavaDep]);
 
-  // 2. Update Major version within each package.
-  for await (const packageLocation of PACKAGE_LOCATIONS) {
-    await updatePackage(packageLocation, closureVersion, (parsed) => {
-      // Ensure the linked dependencies are also using the current released `closure-compiler`.
-      if (
-        parsed.dependencies &&
-        parsed.dependencies['@ampproject/google-closure-compiler-java']
-      ) {
-        parsed.dependencies[
-          '@ampproject/google-closure-compiler-java'
-        ] = closureVersion;
-      }
-      if (parsed.optionalDependencies) {
-        if (
-          parsed.optionalDependencies[
-            '@ampproject/google-closure-compiler-linux'
-          ]
-        ) {
-          parsed.optionalDependencies[
-            '@ampproject/google-closure-compiler-linux'
-          ] = closureVersion;
-        }
-        if (
-          parsed.optionalDependencies['@ampproject/google-closure-compiler-osx']
-        ) {
-          parsed.optionalDependencies[
-            '@ampproject/google-closure-compiler-osx'
-          ] = closureVersion;
-        }
-        if (
-          parsed.optionalDependencies[
-            '@ampproject/google-closure-compiler-windows'
-          ]
-        ) {
-          parsed.optionalDependencies[
-            '@ampproject/google-closure-compiler-windows'
-          ] = closureVersion;
-        }
-      }
-
-      return parsed;
-    });
-  }
+  // 2. Update versions within each package.
+  const updatedVersion = await updatePackageVersions(
+    MAIN_PACKAGE_FILE,
+    closureMajorVersion
+  );
+  await Promise.all(
+    SUB_PACKAGE_FILES.map(async (packageFile) => {
+      await updatePackageVersions(packageFile, closureMajorVersion);
+    })
+  );
 
   // 3. Exit early if no versions were updated.
   const platformSuffixes = [
@@ -145,10 +137,10 @@ async function updatePackage(
     `git config --global user.email "${process.env.GITHUB_ACTOR}@users.noreply.github.com"`
   );
   execOrDie(`git add ${packageJsonFiles.join(' ')}`);
-  execOrDie(`git commit -m "v${closureVersion}"`);
+  execOrDie(`git commit -m "v${updatedVersion}"`);
   execOrDie('git clean -d  -f .');
   execOrDie('git checkout -- .');
   pushPendingCommits();
-  execOrDie(`git tag "v${closureVersion}"`);
+  execOrDie(`git tag "v${updatedVersion}"`);
   pushPendingTags();
 })();
