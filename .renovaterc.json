@@ -7,14 +7,18 @@
   "ignorePaths": ["packages/**", "node_modules/**"],
   "packageRules": [
     {
-      "paths": ["+(package.json)"],
+      "groupName": "Dev Dependencies",
+      "matchFiles": ["package.json"],
       "depTypeList": ["devDependencies"],
-      "groupName": "Dev Dependencies"
+      "automerge": true,
+      "assignAutomerge": true
     },
     {
-      "paths": ["+(package.json)"],
+      "groupName": "Closure Compiler",
+      "matchFiles": ["package.json"],
       "packageNames": ["google-closure-compiler-java"],
-      "groupName": "Closure Compiler"
+      "automerge": true,
+      "assignAutomerge": true
     }
   ]
 }
