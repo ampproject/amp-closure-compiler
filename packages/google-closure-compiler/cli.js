@@ -15,8 +15,32 @@
  * limitations under the License.
  */
 'use strict';
+const fs = require('fs');
+const path = require('path');
 const {getNativeImagePath, getFirstSupportedPlatform} = require('./lib/utils');
 const parseArgs = require('minimist');
+
+/** @see https://stackoverflow.com/a/40686853/1211524 */
+function mkDirByPathSync(targetDir, {isRelativeToScript = false} = {}) {
+  const sep = path.sep;
+  const initDir = path.isAbsolute(targetDir) ? sep : '';
+  const baseDir = isRelativeToScript ? __dirname : '.';
+
+  targetDir.split(sep).reduce((parentDir, childDir) => {
+    const curDir = path.resolve(baseDir, parentDir, childDir);
+    try {
+      if (!fs.existsSync(curDir)) {
+        fs.mkdirSync(curDir);
+      }
+    } catch (err) {
+      if (err.code !== 'EEXIST') {
+        throw err;
+      }
+    }
+
+    return curDir;
+  }, initDir);
+}
 
 const compilerFlags = parseArgs(process.argv.slice(2));
 
@@ -24,7 +48,7 @@ const compilerFlags = parseArgs(process.argv.slice(2));
 // If it exists, use the value, but then delete it so that it's not actually passed to the compiler.
 let platform;
 if (compilerFlags.hasOwnProperty('platform')) {
-  platform = compilerFlags.platform;
+  platform = getFirstSupportedPlatform(compilerFlags.platform.split(','));
   delete compilerFlags.platform;
 } else {
   platform = getFirstSupportedPlatform(['native', 'java']);
@@ -51,7 +75,7 @@ if (compilerFlags.hasOwnProperty('_') && compilerFlags['_'].length > 0) {
 // Boolean arguments can in some cases be parsed as strings.
 // Since its highly unlikely that an argument actually needs to be the strings 'true' or 'false',
 // convert them to true booleans.
-Object.keys(compilerFlags).forEach(flag => {
+Object.keys(compilerFlags).forEach((flag) => {
   if (compilerFlags[flag] === 'true') {
     compilerFlags[flag] = true;
   } else if (compilerFlags[flag] === 'false') {
