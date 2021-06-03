@@ -17,23 +17,19 @@
 'use strict';
 
 const del = require('del');
-const {exec} = require('./exec.js');
 
 /**
- * Remove all build artifacts and OS restrictions
+ * Remove all build and test artifacts.
  **/
 (async function () {
   const pathsToDelete = [
     './temp',
     './build',
-    './packages/google-closure-compiler-java/compiler.jar',
     './packages/google-closure-compiler-linux/compiler.jar',
-    './packages/google-closure-compiler-linux/compiler',
     './packages/google-closure-compiler-osx/compiler.jar',
-    './packages/google-closure-compiler-osx/compiler',
     './packages/google-closure-compiler-windows/compiler.jar',
-    './packages/google-closure-compiler-windows/compiler',
+    './packages/**/Foo*',
+    './packages/**/foo*',
   ];
   await del(pathsToDelete);
-  exec('node ./tasks/remove-os-restrictions.js');
 })();
