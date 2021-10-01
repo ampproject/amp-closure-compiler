@@ -47,7 +47,6 @@ const NATIVE_IMAGE_BUILD_ARGS = [
   '-H:+JNI',
   '--no-server',
   '-H:+ReportUnsupportedElementsAtRuntime',
-  '-H:IncludeResourceBundles=com.google.javascript.rhino.Messages',
   '-H:IncludeResourceBundles=org.kohsuke.args4j.Messages',
   '-H:IncludeResourceBundles=org.kohsuke.args4j.spi.Messages',
   '-H:IncludeResourceBundles=com.google.javascript.jscomp.parsing.ParserConfig',
@@ -55,7 +54,7 @@ const NATIVE_IMAGE_BUILD_ARGS = [
     __dirname,
     'reflection-config.json'
   )}`,
-  '-H:IncludeResources="(externs.zip)|(.*(js|txt))"',
+  '-H:IncludeResources="(externs.zip)|(.*(js|txt|typedast))"',
   '-H:+ReportExceptionStackTraces',
   '--initialize-at-build-time',
   '-jar',
