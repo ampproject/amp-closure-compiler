@@ -1,3 +1,9 @@
+## Deprecation Notice
+
+This repo was archived after AMP decided to stop using Closure compiler. See https://github.com/ampproject/amphtml/issues/35264 for more details.
+
+## Original Readme Notes
+
 This repo is a fork of the official Google Closure Compiler with added configuration for AMP's specific runners.
 
 You can inspect them under the `src` directory.
